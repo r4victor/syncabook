@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pubID" xml:lang="en" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+
+    <dc:identifier id="pubID">urn:uuid:{{ uuid }}</dc:identifier>
+    <meta refines="#pubID" property="identifier-type" scheme="xsd:string">uuid</meta>
+
+    <dc:title id="title">{{ title }}</dc:title>
+
+    <dc:language>en</dc:language>
+    
+    <dc:creator id="aut">{{ author }}</dc:creator>
+    <meta refines="#aut" property="role" scheme="marc:relators">aut</meta>
+    
+    <dc:contributor id="nrt">{{ narrator }}</dc:contributor>
+    <meta refines="#nrt" property="role" scheme="marc:relators">nrt</meta>
+    
+    <dc:contributor id="bkp">{{ contributor }}</dc:contributor>
+    <meta refines="#bkp" property="role" scheme="marc:relators">bkp</meta>
+
+    <dc:date>{{ date }}</dc:date>
+
+    <dc:publisher>{{ contributor }}</dc:publisher>
+    <dc:rights>CC BY-SA 4.0</dc:rights>
+    
+    <dc:description>{{ description }}</dc:description>
+    
+    <dc:type>Book</dc:type>
+    <meta property="rendition:layout">reflowable</meta>
+    
+    <!--MEDIA OVERLAY METADATA-->
+    {% for media in medias -%}
+    <meta property="media:duration" refines="#{{ media.smil_id }}">{{ media.duration }}</meta>
+    {% endfor -%}
+    <meta property="media:duration">{{ total_duration }}</meta>
+    <meta property="media:narrator">{{ narrator }}</meta>
+    <meta property="media:active-class">-epub-media-overlay-active</meta>
+
+    <meta property="dcterms:modified">2015-12-03T00:00:01Z</meta>
+
+</metadata>
+<manifest>
+    <item id="toc" href="text/nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="c001" href="styles/style.css" media-type="text/css"/>
+
+    {% for text in texts -%}
+    <item id="{{ text.id }}" href="text/{{ text.name }}" media-type="application/xhtml+xml" media-overlay="{{ text.smil_id }}"/>
+    {% endfor %}
+    {% for audio in audios -%}
+    <item id="{{ audio.id }}" href="audio/{{ audio.name }}" media-type="audio/mpeg"/>
+    {% endfor %}
+    {% for smil in smils -%}
+    <item id="{{ smil.id }}" href="smil/{{ smil.name }}" media-type="application/smil+xml"/>
+    {% endfor %}
+</manifest>
+<spine page-progression-direction="ltr">
+    {% for text in texts -%}
+    <itemref idref="{{ text.id }}" linear="yes"/>
+    {% endfor %}
+</spine>
+</package>
+

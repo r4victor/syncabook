@@ -1,0 +1,365 @@
+@namespace epub "http://www.idpf.org/2007/ops";
+
+h1, h2 {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: justify;
+}
+
+p+p {
+    text-indent: 1em;
+}
+
+hr {
+    margin-left: 5%;
+    width: 90%;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* copertina */
+body.cover {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+}
+img.cover {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* titoli di testa/coda */
+.skipAB1 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.skipAB2 {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.skipA1 {
+    margin-top: 1em;
+}
+.skipB1 {
+    margin-bottom: 1em;
+}
+.skipA2 {
+    margin-top: 2em;
+}
+.skipB2 {
+    margin-bottom: 2em;
+}
+.skipA3 {
+    margin-top: 3em;
+}
+.skipB3 {
+    margin-bottom: 3em;
+}
+
+h1.mainPublisher {
+    font-variant: small-caps;
+    font-size: 150%;
+}
+h1.mainTitle {
+    font-variant: small-caps;
+    font-size: 175%;
+}
+h1.mainAuthor {
+    font-variant: small-caps;
+    font-size: 150%;
+}
+h1.mainNarrator {
+    font-variant: small-caps;
+    font-size: 150%;
+}
+h1.textTitle {
+    font-size: 125%;
+}
+h1.textVersion {
+    font-size: 125%;
+}
+h1.textProd {
+    font-size: 75%;
+}
+p.copyrightNotice {
+    text-indent: 0em;
+    text-align: center;
+}
+
+/* colophon */
+p.colophon {
+    margin-top: 1em;
+    margin-left: 1em;
+    text-indent: 0px;
+    text-align: justify;
+}
+p.series {
+    margin-top: 1em;
+    margin-left: 1em;
+    text-indent: 0px;
+    text-align: center;    
+}
+hr.colophon {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    visibility: hidden;
+}
+span.aut {
+    font-style: italic;
+}
+span.tit {
+    font-variant: small-caps;
+}
+span.pub {
+    font-weight: bold;
+}
+span.bkp {
+    font-weight: bold;
+}
+span.ser {
+    font-weight: bold;
+}
+hr.colophon2 {
+    margin-left: 1em;
+    margin-top: 2em;
+    visibility: hidden;
+}
+div.contacts {
+	margin-left: 1em;
+    border-left: 5px solid grey;
+	page-break-inside: avoid;
+	font-size: 0.8em;
+}
+p.colophonContacts {
+    margin-top: 1em;
+    margin-left: 1em;
+    text-indent: 0px;
+    text-align: justify;
+}
+a.colophon {
+    margin-left: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+img.colophon {
+    vertical-align: middle;
+}
+
+/* guida */
+div.snapshot {
+    text-align: center;
+    page-break-before: avoid;
+}
+div.choice {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align: center;
+    page-break-inside: avoid;
+}
+a.readandlisten {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+a.listenonly {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* playlist */ 
+div.playlist {
+    page-break-inside: avoid;
+}
+p.playlistHelp {
+    text-align: center;
+}
+table.playlist {
+    margin-left: 5%;
+    width: 90%;
+    text-align: center;
+    border-collapse: separate; 
+    border-spacing: 0 0.5em;
+}
+tr.playlist {
+    vertical-align: middle;
+}
+td.playlist {
+    text-align: left;
+}
+div.playlist {
+    page-break-inside: avoid;
+}
+p.playlist {
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-left: 0em;
+    text-indent: 0px;
+    text-align: left;
+}
+audio.playlist {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 0.5em;
+    padding-bottom: 1.5em;
+    width: 90%;
+}
+span.trackNumber {
+    font-weight: bold;
+}
+span.trackTitle {
+    font-weight: bold;
+}
+span.trackDuration {
+}
+
+/* Audio */
+audio {
+    width: 100%;
+    text-align: center;
+}
+div.audio {
+    margin-left: 5%;
+    width: 90%;
+    text-align: center;
+    page-break-inside: avoid;
+}
+p.audioError {
+    text-align: center;
+    text-indent: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* chapter */
+h1.partTitle {
+    font-variant: small-caps;
+    font-size: 200%;
+}
+h1.chapterTitle {
+    font-variant: small-caps;
+    font-size: 175%;
+}
+h2.chapterTitle {
+    font-size: 175%;
+}
+p.endPart {
+    text-indent: 0px;
+    text-align: center;
+}
+p.navBar {
+    text-indent: 0px;
+    text-align: center;
+}
+h3.noteTitle {
+    text-align: center;
+    margin-bottom: 1em;
+}
+div.noteText {
+    page-break-inside: avoid;
+    text-align: left;
+    text-indent: 0em;
+}
+p.noteText {
+    text-align: justify;
+    text-indent: 0em;
+    margin-bottom: 1em;
+}
+a.note {
+    margin-left: 0em;
+    margin-right: 1em;
+}
+a.noteBackLink {
+    margin-left: 0em;
+    margin-right: 0em;
+}
+
+/* indice */
+body.indice {
+}
+div.indice {
+    margin-left: 1em;
+}
+nav.indice {
+    margin-left: 1em;
+}
+h1.indice {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 0px;
+    text-align: left;
+}
+ul.indice {
+    margin-left: 0px;
+    padding: 0px;
+    text-align: left;
+    list-style-type: none;
+}
+ol.indice {
+    margin-left: 0px;
+    padding: 0px;
+    text-align: left;
+    list-style-type: none;
+}
+li.indice {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+p.indice {
+    margin-left: 0px;
+    padding: 0px;
+    text-align: left;
+    text-indent: 0px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+ul.indice2 {
+    margin-left: 1em;
+    padding: 0px;
+    text-align: left;
+    list-style-type: none;
+}
+ol.indice2 {
+    margin-left: 1em;
+    padding: 0px;
+    text-align: left;
+    list-style-type: none;
+}
+li.indice2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+p.indice2 {
+    margin-left: 1em;
+    padding: 0px;
+    text-align: left;
+    text-indent: 0px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+a.indice {
+}
+
+/* Media Overlay highlight color: yellow */
+.-epub-media-overlay-active {
+    background-color: #FFFF00;
+}
+.rbActiveFragment {
+    background-color: #FFFF99;
+    -webkit-transition: background 0.25s;
+}
+.rbPausedFragment {
+    background-color: #99FF99;
+    -webkit-transition: background 0.25s;
+}

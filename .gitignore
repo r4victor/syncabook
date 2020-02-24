@@ -1,0 +1,10 @@
+# common
+.DS_STORE
+
+/.vscode/
+
+**/__pycache__/
+*.py[co]
+
+# project specific
+/ebooks

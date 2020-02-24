@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="it" xml:lang="it">
+  <head>
+      <meta http-equiv="default-style" content="text/html; charset=utf-8"/>
+      <link rel="stylesheet" href="../styles/style.css" type="text/css"/>
+      <title></title>
+  </head>
+  <body>
+    <section epub:type="bodymatter chapter">
+      <hr id="audio" class="sepBar"/>
+      <!-- <h1 class="chapterTitle"><span id="f000001">Chapter 1</span></h1> -->
+      {% for paragraph in paragraphs -%}
+      <p>
+      {% for fragment in paragraph -%}
+      <span id="{{ fragment.id }}">{{ fragment.text }}</span>{% endfor %}
+      </p>
+      {% endfor -%}
+      <hr class="sepBar"/>
+    </section>
+  </body>
+</html>
