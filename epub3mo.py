@@ -1,5 +1,4 @@
 import argparse
-from bs4 import BeautifulSoup
 from datetime import date, datetime, timedelta
 import json
 import os.path
@@ -7,24 +6,34 @@ import math
 import re
 import shutil
 import subprocess
+import urllib.request
 import uuid
 from zipfile import ZipFile
 
-import lxml.etree
+from bs4 import BeautifulSoup
 import jinja2
 
 
-def get_audiobook(url, output_dir):
-    pass
+def get_audiobook(librivox_url, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+    with urllib.request.urlopen(librivox_url) as f:
+        soup = BeautifulSoup(f.read(), 'lxml')
+
+    book_url = soup.find('a', class_='book-download-btn')['href']
+    local_filename, _ = urllib.request.urlretrieve(book_url)
+
+    with ZipFile(local_filename) as z:
+        z.extractall(path=output_dir)
 
 
 def split_text(split_pattern, textfile, output_dir):
     with open(textfile, 'r') as f:
         text = f.read()
 
-    splits = re.findall(split_pattern, text)
+    delimeters = re.findall(split_pattern, text)
     texts = re.split(split_pattern, text)
-    texts = [s + t for s, t in zip(splits, texts[1:])]
+    texts = [d + t for d, t in zip(delimeters, texts[1:])]
     os.makedirs(output_dir)
 
     for i, text in enumerate(texts, start=1):
@@ -34,11 +43,13 @@ def split_text(split_pattern, textfile, output_dir):
             f.write(text)
 
 
-def textfiles_to_xhtmls(input_dir, output_dir):
+def textfiles_to_xhtmls(input_dir, output_dir, fragment_type):
     os.makedirs(output_dir, exist_ok=True)
 
+    input_filenames = sorted(os.listdir(input_dir))
+
     texts = []
-    for filename in os.listdir(input_dir):
+    for filename in input_filenames:
         file_path = os.path.join(input_dir, filename)
         with open(file_path, 'r') as f:
             texts.append(f.read())
@@ -46,11 +57,14 @@ def textfiles_to_xhtmls(input_dir, output_dir):
     # fragment texts
     contents = []
     for text in texts:
-        paragraphs_text = [p.strip() for p in text.splitlines() if p.strip()]
+        paragraphs_contents = [p.strip().replace('\n', ' ') for p in text.split('\n\n') if p.strip()]
         paragraphs = []
-        for p in paragraphs_text:
-            # fragment by paragraphs
-            fragments = [p]
+        for p in paragraphs_contents:
+            if fragment_type == 'sentence':
+                fragments = get_sentences(p)
+            else:
+                # use paragraphs as fragments
+                fragments = [p]
             paragraphs.append(fragments)
         contents.append(paragraphs)
 
@@ -60,14 +74,14 @@ def textfiles_to_xhtmls(input_dir, output_dir):
 
     # render xhtmls
     xhtmls = []
-    fragments_num = 1
+    fragment_id = 1
     for ps in contents:
         paragraphs = []
         for fs in ps:
             fragments = []
             for f in fs:
-                fragments.append({'id': f'f{fragments_num:0>{n}}', 'text': f})
-                fragments_num += 1
+                fragments.append({'id': f'f{fragment_id:0>{n}}', 'text': f})
+                fragment_id += 1
             paragraphs.append(fragments)
         
         env = jinja2.Environment(
@@ -78,10 +92,31 @@ def textfiles_to_xhtmls(input_dir, output_dir):
         xhtml = template.render(paragraphs=paragraphs)
         xhtmls.append(xhtml)
 
-    for filename, xhtml in zip(os.listdir(input_dir), xhtmls):
+    for filename, xhtml in zip(input_filenames, xhtmls):
         file_path = os.path.join(output_dir, f'{drop_ext(filename)}.xhtml')
         with open(file_path, 'x') as f:
             f.write(xhtml)
+
+
+def get_sentences(text):
+    """
+    Fragment by "{sentence_ending_char}{space}"
+    """
+    sentence_endings = {'.', '!', '?'}
+    fragments = []
+    sentence_start_idx = 0
+    sentence_ended = False
+    for i, c in enumerate(text):
+        if i == len(text) - 1:
+            fragments.append(text[sentence_start_idx:i+1])
+        if c in sentence_endings:
+            sentence_ended = True
+            continue
+        if sentence_ended and c == ' ':
+            fragments.append(text[sentence_start_idx:i+1])
+            sentence_start_idx = i+1
+        sentence_ended = False
+    return fragments
 
 
 def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
@@ -212,8 +247,8 @@ def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
                 z.write(os.path.join(dirpath, filename), arcname)
 
 
-def get_number_of_digits_to_name(files_num):
-    return math.floor(math.log10(files_num)) + 1
+def get_number_of_digits_to_name(num):
+    return math.floor(math.log10(num)) + 1
 
 
 def drop_ext(filename):
@@ -251,6 +286,11 @@ def parse_clockvalue(clockvalue):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command')
+
+    parser_split = subparsers.add_parser('get')
+    parser_split.add_argument('librivox_url')
+    parser_split.add_argument('output_dir')
+
     parser_split = subparsers.add_parser('split')
     parser_split.add_argument('textfile')
     parser_split.add_argument('output_dir')
@@ -258,17 +298,20 @@ if __name__ == '__main__':
     parser_to_xhtml = subparsers.add_parser('to_xhtml')
     parser_to_xhtml.add_argument('input_dir')
     parser_to_xhtml.add_argument('output_dir')
+    parser_to_xhtml.add_argument('--fragment-type', choices=['sentence', 'paragraph'], dest='fragment_type', default='sentence')
 
     parser_create = subparsers.add_parser('create')
     parser_create.add_argument('book_dir')
 
     args = parser.parse_args()
 
-    if args.command == 'split':
+    if args.command == 'get':
+        get_audiobook(args.librivox_url, args.output_dir)
+    elif args.command == 'split':
         split_text('CHAPTER', args.textfile, args.output_dir)
     elif args.command == 'to_xhtml':
-        textfiles_to_xhtmls(args.input_dir, args.output_dir)
-    else:
+        textfiles_to_xhtmls(args.input_dir, args.output_dir, args.fragment_type)
+    elif args.command == 'create':
         audio_dir = os.path.join(args.book_dir, 'audio')
         text_dir = os.path.join(args.book_dir, 'text')
         metadatafile = os.path.join(args.book_dir, 'metadata.json')

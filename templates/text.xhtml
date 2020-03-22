@@ -12,7 +12,8 @@
       {% for paragraph in paragraphs -%}
       <p>
       {% for fragment in paragraph -%}
-      <span id="{{ fragment.id }}">{{ fragment.text }}</span>{% endfor %}
+      <span id="{{ fragment.id }}">{{ fragment.text }}</span>
+      {% endfor -%}
       </p>
       {% endfor -%}
       <hr class="sepBar"/>
