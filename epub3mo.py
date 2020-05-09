@@ -7,6 +7,7 @@ import re
 import shutil
 import subprocess
 import urllib.request
+import urllib.parse
 import uuid
 from zipfile import ZipFile
 
@@ -14,39 +15,121 @@ from bs4 import BeautifulSoup
 import jinja2
 
 
-def get_audiobook(librivox_url, output_dir):
+def get_book(librivox_url, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     with urllib.request.urlopen(librivox_url) as f:
-        soup = BeautifulSoup(f.read(), 'lxml')
+        librivox_soup = BeautifulSoup(f.read(), 'lxml')
 
-    book_url = soup.find('a', class_='book-download-btn')['href']
+    # download text
+    gutenberg_url = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})['href']
+
+    with urllib.request.urlopen(gutenberg_url) as f:
+        gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
+
+    text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
+    text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
+    text_path = os.path.join(output_dir, 'text.txt')
+
+    urllib.request.urlretrieve(text_absolute_url, text_path)
+
+    # download audiobook
+    book_url = librivox_soup.find('a', class_='book-download-btn')['href']
     local_filename, _ = urllib.request.urlretrieve(book_url)
 
+    audio_dir = os.path.join(output_dir, 'audio')
+
     with ZipFile(local_filename) as z:
-        z.extractall(path=output_dir)
+        z.extractall(path=audio_dir)
 
 
-def split_text(split_pattern, textfile, output_dir):
-    with open(textfile, 'r') as f:
-        text = f.read()
+def split_text(text_file, output_dir, mode, pattern, n):
+    with open(text_file, 'r') as f:
+            text = f.read()
 
-    delimeters = re.findall(split_pattern, text)
+    if mode in ['opening', 'delimeter'] and pattern is None:
+        print(f'\nERROR: --pattern is required in {mode} mode.\n')
+        return
+
+    if mode == 'opening':
+        n_files = split_text_by_opening(pattern, text, output_dir)
+    elif mode == 'delimeter':
+        n_files = split_text_by_delimeter(pattern, text, output_dir)
+    elif mode == 'equal':
+        if n is None:
+            print(f'\nERROR: --n is required in {mode} mode.\n')
+        
+        n_files = split_text_into_n_parts(n, text, output_dir)
+
+    if n_files > 0:
+        print(f'\nSplitting into {n_files} files is performed.\n')
+
+
+def split_text_by_opening(split_pattern, text, output_dir):
+    openings = re.findall(split_pattern, text)
+
+    if len(openings) == 0:
+        print(
+            f'\nERROR: No text matching pattern "{split_pattern}". '
+            'Splitting is not permformed.\n'
+        )
+        return
+
     texts = re.split(split_pattern, text)
-    texts = [d + t for d, t in zip(delimeters, texts[1:])]
-    os.makedirs(output_dir)
+    texts = [d + t for d, t in zip(openings, texts[1:])]
+
+    save_texts(texts, output_dir)
+
+    return len(texts)
+
+
+def split_text_by_delimeter(split_pattern, text, output_dir):
+    texts = re.split(split_pattern, text)
+
+    if len(texts) == 0:
+        print(
+            f'\nERROR: No text matching pattern "{split_pattern}". '
+            'Splitting is not permformed.\n'
+        )
+        return
+
+    save_texts(texts, output_dir)
+
+    return len(texts)
+
+
+def split_text_into_n_parts(n, text, output_dir):
+    l = len(text) // n
+
+    texts = []
+
+    j = 0
+    for i in range(len(text)):
+        if i >= l + j and text[i] == text[i+1] == '\n':
+            texts.append(text[j:i+2])
+            j = i + 2
+
+    texts.append(text[j:])
+
+    save_texts(texts, output_dir)
+
+    return len(texts)
+
+
+def save_texts(texts, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
 
     for i, text in enumerate(texts, start=1):
         n = get_number_of_digits_to_name(len(texts))
         file_path = os.path.join(output_dir, f'{i:0>{n}}.txt')
-        with open(file_path, 'x') as f:
+        with open(file_path, 'w') as f:
             f.write(text)
 
 
 def textfiles_to_xhtmls(input_dir, output_dir, fragment_type):
     os.makedirs(output_dir, exist_ok=True)
 
-    input_filenames = sorted(os.listdir(input_dir))
+    input_filenames = sorted(x for x in os.listdir(input_dir) if x.endswith('.txt'))
 
     texts = []
     for filename in input_filenames:
@@ -166,7 +249,7 @@ def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
     for textfile in os.listdir(epub_text_dir):
         shutil.copy(os.path.join(epub_text_dir, textfile), job_resources_dir)
 
-    subprocess.run(['python', '-m', 'aeneas.tools.execute_job', job_dir, epub_dir])
+    subprocess.run(['python', '-m', 'aeneas.tools.execute_job', '-v', job_dir, epub_dir])
 
     # shutil.rmtree(tmp_dir)
 
@@ -285,20 +368,37 @@ def parse_clockvalue(clockvalue):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='command')
+    subparsers = parser.add_subparsers(dest='command', required=True)
 
     parser_split = subparsers.add_parser('get')
     parser_split.add_argument('librivox_url')
     parser_split.add_argument('output_dir')
 
-    parser_split = subparsers.add_parser('split')
+    parser_split = subparsers.add_parser(
+        'split_text',
+        description='Split single text file into multiple files.'
+    )
     parser_split.add_argument('textfile')
     parser_split.add_argument('output_dir')
+    parser_split.add_argument(
+        '--mode', dest='mode', choices=['delimeter', 'opening', 'equal'], default='opening',
+        help=(
+            'opening mode splits text file by opening PATTERN, i.e. '
+            'each file begins with a PATTERN.\n'
+            'delimeter mode splits text file using PATTERN.\n'
+            'equal mode splits text file into N equal parts.'
+        ),
+    )
+    parser_split.add_argument('--n', dest='n', type=int)
+    parser_split.add_argument('--pattern', dest='pattern')
 
     parser_to_xhtml = subparsers.add_parser('to_xhtml')
     parser_to_xhtml.add_argument('input_dir')
     parser_to_xhtml.add_argument('output_dir')
-    parser_to_xhtml.add_argument('--fragment-type', choices=['sentence', 'paragraph'], dest='fragment_type', default='sentence')
+    parser_to_xhtml.add_argument(
+        '--fragment-type', choices=['sentence', 'paragraph'],
+        dest='fragment_type', default='sentence'
+    )
 
     parser_create = subparsers.add_parser('create')
     parser_create.add_argument('book_dir')
@@ -306,9 +406,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.command == 'get':
-        get_audiobook(args.librivox_url, args.output_dir)
-    elif args.command == 'split':
-        split_text('CHAPTER', args.textfile, args.output_dir)
+        get_book(args.librivox_url, args.output_dir)
+    elif args.command == 'split_text':
+        split_text(args.textfile, args.output_dir, args.mode, args.pattern, args.n)
     elif args.command == 'to_xhtml':
         textfiles_to_xhtmls(args.input_dir, args.output_dir, args.fragment_type)
     elif args.command == 'create':
@@ -316,5 +416,4 @@ if __name__ == '__main__':
         text_dir = os.path.join(args.book_dir, 'text')
         metadatafile = os.path.join(args.book_dir, 'metadata.json')
         output_dir = os.path.join(args.book_dir, 'out')
-
         create_ebook(audio_dir, text_dir, metadatafile, output_dir)
