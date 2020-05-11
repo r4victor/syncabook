@@ -14,6 +14,8 @@ from zipfile import ZipFile
 from bs4 import BeautifulSoup
 import jinja2
 
+from afaligner import align
+
 
 def get_book(librivox_url, output_dir):
     os.makedirs(output_dir, exist_ok=True)
@@ -202,7 +204,12 @@ def get_sentences(text):
     return fragments
 
 
-def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
+def create_ebook(book_dir):
+    audio_dir = os.path.join(book_dir, 'audio')
+    text_dir = os.path.join(book_dir, 'text')
+    metadatafile = os.path.join(book_dir, 'metadata.json')
+    output_dir = os.path.join(book_dir, 'out')
+
     tmp_dir = os.path.join(output_dir, 'tmp')
 
     # initialize epub files
@@ -236,20 +243,13 @@ def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
     for i, textfile in enumerate(sorted(os.listdir(text_dir)), start=1):
         shutil.copy(os.path.join(text_dir, textfile), os.path.join(epub_text_dir, f'{i:0>{n}}.xhtml'))
 
-    # create SMIL using aeneas
-    job_dir = os.path.join(tmp_dir, 'job')
-    job_resources_dir = os.path.join(job_dir, 'resources')
-
-    os.makedirs(job_resources_dir, exist_ok=True)
-    shutil.copy('templates/config.txt', job_dir)
-    
-    for audiofile in os.listdir(epub_audio_dir):
-        shutil.copy(os.path.join(epub_audio_dir, audiofile), job_resources_dir)
-
-    for textfile in os.listdir(epub_text_dir):
-        shutil.copy(os.path.join(epub_text_dir, textfile), job_resources_dir)
-
-    subprocess.run(['python', '-m', 'aeneas.tools.execute_job', '-v', job_dir, epub_dir])
+    # create SMIL files using afaligner
+    align(
+        epub_text_dir, epub_audio_dir, epub_smil_dir,
+        output_format='smil',
+        output_text_path_prefix='../text/',
+        output_audio_path_prefix='../audio/'
+    )
 
     # shutil.rmtree(tmp_dir)
 
@@ -294,8 +294,19 @@ def create_ebook(audio_dir, text_dir, metadatafile, output_dir):
         for filename, duration in zip(sorted(os.listdir(epub_smil_dir)), media_durations)
     ]
 
-    with open(metadatafile, 'r') as f:
-        metadata = json.load(f)
+    try:
+        with open(metadatafile, 'r') as f:
+            metadata = json.load(f)
+    except FileNotFoundError:
+        print('File metadata.json is not found. Please provide metadata')
+        metadata = {}
+        metadata['title'] = input('Title: ')
+        metadata['author'] = input('Author: ')
+        metadata['description'] = input('Description: ')
+        metadata['narrator'] = input('Narrator: ')
+        with open(metadatafile, 'w') as f:
+            json.dump(metadata, f, indent=2)
+        print('File metadata.json is created.')
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates/'))
     opf_template = env.get_template('content.opf')
@@ -400,8 +411,21 @@ if __name__ == '__main__':
         dest='fragment_type', default='sentence'
     )
 
-    parser_create = subparsers.add_parser('create')
-    parser_create.add_argument('book_dir')
+    parser_create = subparsers.add_parser(
+        'create',
+        description=(
+            'Create EPUB3 ebook with synchronized text and audio.'
+        )
+    )
+    parser_create.add_argument(
+        'book_dir',
+        help=(
+            'book_dir must contain text/ directory with a list of .xhtml files,'
+            ' audio/ directory with a list of audio files and a file named metadata.json'
+            ' describing a book to be produced.'
+            ' If not provided, metadata.json will be created in the process. '
+        ) 
+    )
 
     args = parser.parse_args()
 
@@ -412,8 +436,4 @@ if __name__ == '__main__':
     elif args.command == 'to_xhtml':
         textfiles_to_xhtmls(args.input_dir, args.output_dir, args.fragment_type)
     elif args.command == 'create':
-        audio_dir = os.path.join(args.book_dir, 'audio')
-        text_dir = os.path.join(args.book_dir, 'text')
-        metadatafile = os.path.join(args.book_dir, 'metadata.json')
-        output_dir = os.path.join(args.book_dir, 'out')
-        create_ebook(audio_dir, text_dir, metadatafile, output_dir)
+        create_ebook(args.book_dir)
