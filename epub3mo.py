@@ -13,17 +13,18 @@ from zipfile import ZipFile
 
 from bs4 import BeautifulSoup
 import jinja2
+import progressbar
 
 from afaligner import align
 
 
-def get_book(librivox_url, output_dir):
+def download_files(librivox_url, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     with urllib.request.urlopen(librivox_url) as f:
         librivox_soup = BeautifulSoup(f.read(), 'lxml')
 
-    # download text
+    print('Downloading text...')
     gutenberg_url = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})['href']
 
     with urllib.request.urlopen(gutenberg_url) as f:
@@ -33,16 +34,39 @@ def get_book(librivox_url, output_dir):
     text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
     text_path = os.path.join(output_dir, 'text.txt')
 
-    urllib.request.urlretrieve(text_absolute_url, text_path)
+    urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
+
+    print(f'Text is downloaded and saved as {text_path}')
+
+    print('Downloading audio...')
 
     # download audiobook
     book_url = librivox_soup.find('a', class_='book-download-btn')['href']
-    local_filename, _ = urllib.request.urlretrieve(book_url)
+    local_filename, _ = urllib.request.urlretrieve(book_url, reporthook=ProgressBar())
 
     audio_dir = os.path.join(output_dir, 'audio')
 
     with ZipFile(local_filename) as z:
         z.extractall(path=audio_dir)
+
+    print(f'Audio is downloaded and saved to {audio_dir}')
+
+
+class ProgressBar():
+    def __init__(self):
+        self.pbar = None
+
+    def __call__(self, block_num, block_size, total_size):
+        if self.pbar is None:
+            self.pbar = progressbar.ProgressBar(maxval=total_size)
+            self.pbar.start()
+
+        downloaded = block_num * block_size
+
+        if downloaded < total_size:
+            self.pbar.update(downloaded)
+        else:
+            self.pbar.finish()
 
 
 def split_text(text_file, output_dir, mode, pattern, n):
@@ -204,13 +228,36 @@ def get_sentences(text):
     return fragments
 
 
-def create_ebook(book_dir):
+def sync(text_dir, audio_dir, output_dir, alignment_radius, alignment_skip_penalty):
+    align(
+        text_dir, audio_dir, output_dir,
+        output_format='smil',
+        sync_map_text_path_prefix='../text/',
+        sync_map_audio_path_prefix='../audio/',
+        radius=alignment_radius,
+        skip_penalty=alignment_skip_penalty
+    )
+
+
+def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     audio_dir = os.path.join(book_dir, 'audio')
     text_dir = os.path.join(book_dir, 'text')
+    smil_dir = os.path.join(book_dir, 'smil')
     metadatafile = os.path.join(book_dir, 'metadata.json')
     output_dir = os.path.join(book_dir, 'out')
 
     tmp_dir = os.path.join(output_dir, 'tmp')
+
+    # create SMIL files using afaligner
+    if not os.path.isdir(smil_dir) or len(list(os.listdir(smil_dir))) == 0:
+        print('SMIL files are not found. Synchronizing...')
+        sync(
+            text_dir, audio_dir, smil_dir,
+            alignment_radius=alignment_radius,
+            alignment_skip_penalty=alignment_skip_penalty
+        )
+    else:
+        print(f'Using existing SMIL files from {smil_dir}.')
 
     # initialize epub files
     container_dir = os.path.join(tmp_dir, 'container')
@@ -225,33 +272,22 @@ def create_ebook(book_dir):
     os.makedirs(os.path.join(container_dir, 'META-INF'))
     os.makedirs(epub_audio_dir)
     os.makedirs(epub_text_dir)
+    os.makedirs(epub_smil_dir)
     os.makedirs(epub_styles_dir)
 
     shutil.copy('templates/mimetype', os.path.join(container_dir, 'mimetype'))
     shutil.copy('templates/container.xml', os.path.join(container_dir, 'META-INF', 'container.xml'))
     shutil.copy('templates/style.css', os.path.join(epub_styles_dir, 'style.css'))
 
-    audiofiles_num = len(list(os.listdir(audio_dir)))
-    textfiles_num = len(list(os.listdir(text_dir)))
-    assert audiofiles_num == textfiles_num
-    n = get_number_of_digits_to_name(textfiles_num)
-
     # copy resources to epub
-    for i, audiofile in enumerate(sorted(os.listdir(audio_dir)), start=1):
-        shutil.copy(os.path.join(audio_dir, audiofile), os.path.join(epub_audio_dir, f'{i:0>{n}}.mp3'))
+    for filename in os.listdir(audio_dir):
+        shutil.copy(os.path.join(audio_dir, filename), os.path.join(epub_audio_dir, filename))
 
-    for i, textfile in enumerate(sorted(os.listdir(text_dir)), start=1):
-        shutil.copy(os.path.join(text_dir, textfile), os.path.join(epub_text_dir, f'{i:0>{n}}.xhtml'))
+    for filename in os.listdir(text_dir):
+        shutil.copy(os.path.join(text_dir, filename), os.path.join(epub_text_dir, filename))
 
-    # create SMIL files using afaligner
-    align(
-        epub_text_dir, epub_audio_dir, epub_smil_dir,
-        output_format='smil',
-        output_text_path_prefix='../text/',
-        output_audio_path_prefix='../audio/'
-    )
-
-    # shutil.rmtree(tmp_dir)
+    for filename in os.listdir(smil_dir):
+        shutil.copy(os.path.join(smil_dir, filename), os.path.join(epub_smil_dir, filename))
 
     # create package document
     audios = [
@@ -331,7 +367,9 @@ def create_ebook(book_dir):
     shutil.copy('templates/nav.xhtml', os.path.join(epub_text_dir, 'nav.xhtml'))
 
     # create epub archive
-    with ZipFile(os.path.join(output_dir, 'ebook.epub'), 'x') as z:
+    ebook_path = os.path.join(output_dir, 'ebook.epub')
+
+    with ZipFile(ebook_path, 'w') as z:
         # mimetype must be first file in archive
         z.writestr('mimetype', 'application/epub+zip')
         z.write(os.path.join(container_dir, 'META-INF', 'container.xml'), 'META-INF/container.xml')
@@ -339,6 +377,10 @@ def create_ebook(book_dir):
             for filename in filenames:
                 arcname = os.path.join(os.path.relpath(dirpath, container_dir), filename)
                 z.write(os.path.join(dirpath, filename), arcname)
+
+    shutil.rmtree(tmp_dir)
+
+    print(f'The ebook is successfully created as saved as {ebook_path}')
 
 
 def get_number_of_digits_to_name(num):
@@ -381,7 +423,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command', required=True)
 
-    parser_split = subparsers.add_parser('get')
+    parser_split = subparsers.add_parser(
+        'download_files',
+        description='Download text and audio files from the LibriVox page.'
+    )
     parser_split.add_argument('librivox_url')
     parser_split.add_argument('output_dir')
 
@@ -398,18 +443,35 @@ if __name__ == '__main__':
             'each file begins with a PATTERN.\n'
             'delimeter mode splits text file using PATTERN.\n'
             'equal mode splits text file into N equal parts.'
-        ),
+        )
     )
     parser_split.add_argument('--n', dest='n', type=int)
     parser_split.add_argument('--pattern', dest='pattern')
 
-    parser_to_xhtml = subparsers.add_parser('to_xhtml')
+    parser_to_xhtml = subparsers.add_parser(
+        'to_xhtml',
+        description='Convert plain text files to .xhtml files consisting of fragments.'
+    )
     parser_to_xhtml.add_argument('input_dir')
     parser_to_xhtml.add_argument('output_dir')
     parser_to_xhtml.add_argument(
         '--fragment-type', choices=['sentence', 'paragraph'],
-        dest='fragment_type', default='sentence'
+        dest='fragment_type', default='sentence',
+        help=(
+            'Determines how text is splitted into the fragments. Defaults to sentence.'
+        )
     )
+
+    parser_sync = subparsers.add_parser(
+        'sync',
+        description=(
+            'Synchronize text and audio producing a list of SMIL files.'
+            ' See afaligner library for synchronization details.'
+        )
+    )
+    parser_sync.add_argument('text_dir')
+    parser_sync.add_argument('audio_dir')
+    parser_sync.add_argument('output_dir')
 
     parser_create = subparsers.add_parser(
         'create',
@@ -421,19 +483,53 @@ if __name__ == '__main__':
         'book_dir',
         help=(
             'book_dir must contain text/ directory with a list of .xhtml files,'
-            ' audio/ directory with a list of audio files and a file named metadata.json'
+            ' audio/ directory with a list of audio files,'
+            ' smil/ directory with a list of SMIL files for synchronization'
+            ' and a file named metadata.json'
             ' describing a book to be produced.'
-            ' If not provided, metadata.json will be created in the process. '
+            ' If smil/ directory doesn\'t exist or is empty, synchronization will be performed.'
+            ' If not provided, metadata.json will be created in the process.'
         ) 
     )
 
+    # arguments common to both parsers
+    for p in (parser_sync, parser_create):
+        p.add_argument(
+            '-r', '--alignment-radius',
+            dest='alignment_radius', type=int,
+            help=(
+                'Parameter of the alignment algorithm that determines the trade-off'
+                ' between optimality and computational resources.'
+                ' If not specified, afaligner\'s default value is used.'
+            )
+        )
+        p.add_argument(
+            '-p', '--alignment-skip-penalty',
+            dest='alignment_skip_penalty', type=float,
+            help=(
+                'Parameter of the alignment algorithm that determines the cost'
+                ' of unsynchronized text or audio.'
+                ' If not specified, afaligner\'s default value is used.'
+            )
+        )
+
     args = parser.parse_args()
 
-    if args.command == 'get':
-        get_book(args.librivox_url, args.output_dir)
+    if args.command == 'download_files':
+        download_files(args.librivox_url, args.output_dir)
     elif args.command == 'split_text':
         split_text(args.textfile, args.output_dir, args.mode, args.pattern, args.n)
     elif args.command == 'to_xhtml':
         textfiles_to_xhtmls(args.input_dir, args.output_dir, args.fragment_type)
+    elif args.command == 'sync':
+        sync(
+            args.text_dir, args.audio_dir, args.output_dir,
+            alignment_radius=args.alignment_radius,
+            alignment_skip_penalty=args.alignment_skip_penalty
+        )
     elif args.command == 'create':
-        create_ebook(args.book_dir)
+        create_ebook(
+            args.book_dir,
+            alignment_radius=args.alignment_radius,
+            alignment_skip_penalty=args.alignment_skip_penalty
+        )
