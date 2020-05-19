@@ -26,7 +26,7 @@ def download_files(librivox_url, output_dir):
 
     gutenberg_link = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})
     if gutenberg_link is None:
-        print('Link to the gutenberg.org is not found. Text is not downloaded.')
+        print('Link to the gutenberg.org is not found. Text will not be downloaded.')
     else:
         print('Downloading text...')
         gutenberg_url = gutenberg_link['href']
@@ -40,7 +40,7 @@ def download_files(librivox_url, output_dir):
 
         urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
 
-        print(f'Text is downloaded and saved as {text_path}')
+        print(f'Text has been downloaded and saved as {text_path}')
 
     print('Downloading audio...')
 
@@ -52,7 +52,7 @@ def download_files(librivox_url, output_dir):
     with ZipFile(local_filename) as z:
         z.extractall(path=audio_dir)
 
-    print(f'Audio is downloaded and saved to {audio_dir}')
+    print(f'Audio has been downloaded and saved to {audio_dir}')
 
 
 class ProgressBar():
@@ -372,7 +372,18 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     with open(os.path.join(epub_dir, 'content.opf'), 'x') as f:
         f.write(opf_content)
 
-    shutil.copy('templates/nav.xhtml', os.path.join(epub_text_dir, 'nav.xhtml'))
+    content_files = [
+        {
+            'name': filename,
+            'toc_name': drop_ext(filename)
+        }
+        for filename in sorted(os.listdir(epub_text_dir))
+    ]
+
+    nav_template = env.get_template('nav.xhtml')
+    nav_content = nav_template.render(content_files=content_files)
+    with open(os.path.join(epub_text_dir, 'nav.xhtml'), 'x') as f:
+        f.write(nav_content)
 
     # create epub archive
     ebook_path = os.path.join(output_dir, 'ebook.epub')
@@ -388,7 +399,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
 
     shutil.rmtree(tmp_dir)
 
-    print(f'The ebook is successfully created and saved as {ebook_path}')
+    print(f'The ebook has been successfully created and saved as {ebook_path}')
 
 
 def get_number_of_digits_to_name(num):

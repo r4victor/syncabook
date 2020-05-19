@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en">
-    <head>
-        <meta http-equiv="default-style" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" href="../styles/style.css" type="text/css"/>
-        <title>Table of Contents</title>
-    </head>
-    <body class="indice">	
-        <nav class="indice" epub:type="toc">
-            <h1 class="indice">Table of Contents</h1>
-            <ol class="indice">
-                <li class="indice"><a class="indice" href="01.xhtml">one</a></li>
-            </ol>
-        </nav>
-    </body>
+  <head>
+    <meta http-equiv="default-style" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../styles/style.css" type="text/css"/>
+    <title>Table of Contents</title>
+  </head>
+  <body>	
+    <nav epub:type="toc">
+      <h1>Table of Contents</h1>
+      <ol>
+        {% for f in content_files %}
+        <li><a href="{{ f.name }}">{{ f.toc_name }}</a></li>
+        {% endfor %}
+      </ol>
+    </nav>
+  </body>
 </html>
 
