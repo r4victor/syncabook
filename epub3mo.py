@@ -24,23 +24,26 @@ def download_files(librivox_url, output_dir):
     with urllib.request.urlopen(librivox_url) as f:
         librivox_soup = BeautifulSoup(f.read(), 'lxml')
 
-    print('Downloading text...')
-    gutenberg_url = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})['href']
+    gutenberg_link = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})
+    if gutenberg_link is None:
+        print('Link to the gutenberg.org is not found. Text is not downloaded.')
+    else:
+        print('Downloading text...')
+        gutenberg_url = gutenberg_link['href']
 
-    with urllib.request.urlopen(gutenberg_url) as f:
-        gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
+        with urllib.request.urlopen(gutenberg_url) as f:
+            gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
 
-    text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
-    text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
-    text_path = os.path.join(output_dir, 'text.txt')
+        text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
+        text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
+        text_path = os.path.join(output_dir, 'text.txt')
 
-    urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
+        urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
 
-    print(f'Text is downloaded and saved as {text_path}')
+        print(f'Text is downloaded and saved as {text_path}')
 
     print('Downloading audio...')
 
-    # download audiobook
     book_url = librivox_soup.find('a', class_='book-download-btn')['href']
     local_filename, _ = urllib.request.urlretrieve(book_url, reporthook=ProgressBar())
 
@@ -206,6 +209,8 @@ def textfiles_to_xhtmls(input_dir, output_dir, fragment_type):
         with open(file_path, 'x') as f:
             f.write(xhtml)
 
+    print(f'{len(texts)} plain text files have been converted to XHTML.')
+
 
 def get_sentences(text):
     """
@@ -229,7 +234,8 @@ def get_sentences(text):
 
 
 def sync(text_dir, audio_dir, output_dir, alignment_radius, alignment_skip_penalty):
-    align(
+    print('Calling afaligner for syncing...')
+    sync_map = align(
         text_dir, audio_dir, output_dir,
         output_format='smil',
         sync_map_text_path_prefix='../text/',
@@ -237,6 +243,8 @@ def sync(text_dir, audio_dir, output_dir, alignment_radius, alignment_skip_penal
         radius=alignment_radius,
         skip_penalty=alignment_skip_penalty
     )
+    if sync_map is not None:
+        print('\nText and audio have been successfully synced.\n')
 
 
 def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
@@ -380,7 +388,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
 
     shutil.rmtree(tmp_dir)
 
-    print(f'The ebook is successfully created as saved as {ebook_path}')
+    print(f'The ebook is successfully created and saved as {ebook_path}')
 
 
 def get_number_of_digits_to_name(num):
@@ -437,7 +445,7 @@ if __name__ == '__main__':
     parser_split.add_argument('textfile')
     parser_split.add_argument('output_dir')
     parser_split.add_argument(
-        '--mode', dest='mode', choices=['delimeter', 'opening', 'equal'], default='opening',
+        '-m', '--mode', dest='mode', choices=['delimeter', 'opening', 'equal'], default='opening',
         help=(
             'opening mode splits text file by opening PATTERN, i.e. '
             'each file begins with a PATTERN.\n'
@@ -445,17 +453,17 @@ if __name__ == '__main__':
             'equal mode splits text file into N equal parts.'
         )
     )
-    parser_split.add_argument('--n', dest='n', type=int)
-    parser_split.add_argument('--pattern', dest='pattern')
+    parser_split.add_argument('-n', dest='n', type=int)
+    parser_split.add_argument('-p', '--pattern', dest='pattern')
 
     parser_to_xhtml = subparsers.add_parser(
         'to_xhtml',
-        description='Convert plain text files to .xhtml files consisting of fragments.'
+        description='Convert plain text files to XHTML files consisting of fragments.'
     )
     parser_to_xhtml.add_argument('input_dir')
     parser_to_xhtml.add_argument('output_dir')
     parser_to_xhtml.add_argument(
-        '--fragment-type', choices=['sentence', 'paragraph'],
+        '-f', '--fragment-type', choices=['sentence', 'paragraph'],
         dest='fragment_type', default='sentence',
         help=(
             'Determines how text is splitted into the fragments. Defaults to sentence.'
@@ -482,7 +490,7 @@ if __name__ == '__main__':
     parser_create.add_argument(
         'book_dir',
         help=(
-            'book_dir must contain text/ directory with a list of .xhtml files,'
+            'book_dir must contain text/ directory with a list of XHTML files,'
             ' audio/ directory with a list of audio files,'
             ' smil/ directory with a list of SMIL files for synchronization'
             ' and a file named metadata.json'
