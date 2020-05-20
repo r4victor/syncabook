@@ -233,10 +233,13 @@ def get_sentences(text):
     return fragments
 
 
-def sync(text_dir, audio_dir, output_dir, alignment_radius, alignment_skip_penalty):
+def sync(book_dir, alignment_radius, alignment_skip_penalty):
+    sync_text_dir = os.path.join(book_dir, 'sync_text')
+    audio_dir = os.path.join(book_dir, 'audio')
+    output_dir = os.path.join(book_dir, 'smil')
     print('Calling afaligner for syncing...')
     sync_map = align(
-        text_dir, audio_dir, output_dir,
+        sync_text_dir, audio_dir, output_dir,
         output_format='smil',
         sync_map_text_path_prefix='../text/',
         sync_map_audio_path_prefix='../audio/',
@@ -263,7 +266,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     if not os.path.isdir(smil_dir) or len(list(os.listdir(smil_dir))) == 0:
         print('SMIL files are not found. Synchronizing...')
         sync(
-            sync_text_dir, audio_dir, smil_dir,
+            book_dir,
             alignment_radius=alignment_radius,
             alignment_skip_penalty=alignment_skip_penalty
         )
@@ -525,9 +528,7 @@ if __name__ == '__main__':
             ' See afaligner library for synchronization details.'
         )
     )
-    parser_sync.add_argument('text_dir')
-    parser_sync.add_argument('audio_dir')
-    parser_sync.add_argument('output_dir')
+    parser_sync.add_argument('book_dir')
 
     parser_create = subparsers.add_parser(
         'create',
@@ -538,14 +539,16 @@ if __name__ == '__main__':
     parser_create.add_argument(
         'book_dir',
         help=(
-            'book_dir must contain text/ directory with a list of XHTML files,'
+            'book_dir must contain sync_text/ directory with a list of synchronized XHTML files,'
+            ' no_sync_text/ directory containing nav.xhtml and colophon.xhtml'
+            ' and any other non-synchronized XHTML files,'
             ' audio/ directory with a list of audio files,'
-            ' smil/ directory with a list of SMIL files for synchronization'
+            ' smil/ directory with a list of SMIL files'
             ' and a file named metadata.json'
             ' describing a book to be produced.'
             ' If smil/ directory doesn\'t exist or is empty, synchronization will be performed.'
-            ' If not provided, metadata.json will be created in the process.'
-        ) 
+            ' If not provided, metadata.json, nav.xhtml and colophon.xhtml will be created in the process.'
+        )
     )
 
     # arguments common to both parsers
@@ -579,7 +582,7 @@ if __name__ == '__main__':
         textfiles_to_xhtmls(args.input_dir, args.output_dir, args.fragment_type)
     elif args.command == 'sync':
         sync(
-            args.text_dir, args.audio_dir, args.output_dir,
+            args.book_dir,
             alignment_radius=args.alignment_radius,
             alignment_skip_penalty=args.alignment_skip_penalty
         )
