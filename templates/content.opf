@@ -44,7 +44,7 @@
     <item id="c001" href="styles/style.css" media-type="text/css"/>
 
     {% for text in texts -%}
-    <item id="{{ text.id }}" href="text/{{ text.name }}" media-type="application/xhtml+xml" media-overlay="{{ text.smil_id }}"/>
+    <item id="{{ text.id }}" href="text/{{ text.name }}" media-type="application/xhtml+xml" {% if text.smil_id %}media-overlay="{{ text.smil_id }}"{% endif %}/>
     {% endfor %}
     {% for audio in audios -%}
     <item id="{{ audio.id }}" href="audio/{{ audio.name }}" media-type="audio/mpeg"/>

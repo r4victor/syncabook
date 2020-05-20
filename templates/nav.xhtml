@@ -9,9 +9,9 @@
     <nav epub:type="toc">
       <h1>Table of Contents</h1>
       <ol>
-        {% for f in content_files %}
+        {% for f in content_files -%}
         <li><a href="{{ f.name }}">{{ f.toc_name }}</a></li>
-        {% endfor %}
+        {% endfor -%}
       </ol>
     </nav>
   </body>

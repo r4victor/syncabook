@@ -249,23 +249,80 @@ def sync(text_dir, audio_dir, output_dir, alignment_radius, alignment_skip_penal
 
 def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     audio_dir = os.path.join(book_dir, 'audio')
-    text_dir = os.path.join(book_dir, 'text')
+    sync_text_dir = os.path.join(book_dir, 'sync_text')
+    no_sync_text_dir = os.path.join(book_dir, 'no_sync_text')
     smil_dir = os.path.join(book_dir, 'smil')
     metadatafile = os.path.join(book_dir, 'metadata.json')
     output_dir = os.path.join(book_dir, 'out')
 
     tmp_dir = os.path.join(output_dir, 'tmp')
 
+    os.makedirs(no_sync_text_dir, exist_ok=True)
+
     # create SMIL files using afaligner
     if not os.path.isdir(smil_dir) or len(list(os.listdir(smil_dir))) == 0:
         print('SMIL files are not found. Synchronizing...')
         sync(
-            text_dir, audio_dir, smil_dir,
+            sync_text_dir, audio_dir, smil_dir,
             alignment_radius=alignment_radius,
             alignment_skip_penalty=alignment_skip_penalty
         )
     else:
         print(f'Using existing SMIL files from {smil_dir}.')
+
+    try:
+        with open(metadatafile, 'r') as f:
+            metadata = json.load(f)
+    except FileNotFoundError:
+        print('File metadata.json is not found. Please provide metadata')
+        metadata = {}
+        metadata['title'] = input('Title: ')
+        metadata['author'] = input('Author: ')
+        metadata['description'] = input('Description: ')
+        metadata['narrator'] = input('Narrator: ')
+        metadata['contributor'] = input('Contributor: ')
+        metadata['transcriber'] = input('Transcriber: ')
+        with open(metadatafile, 'w') as f:
+            json.dump(metadata, f, indent=2)
+        print('File metadata.json is created.')
+
+    env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates/'))
+
+    # create ToC file if doesn't exist
+    nav_path = os.path.join(no_sync_text_dir, 'nav.xhtml')
+    if not os.path.exists(nav_path):
+        print(f'File {nav_path} is not found. Creating...')
+        content_files = [
+            {
+                'name': filename,
+                'toc_name': drop_ext(filename)
+            }
+            for filename in sorted(os.listdir(sync_text_dir))
+        ]
+        nav_template = env.get_template('nav.xhtml')
+        nav_content = nav_template.render(content_files=content_files)
+        with open(nav_path, 'x') as f:
+            f.write(nav_content)
+
+        print(f'File {nav_path} has been created. You may want to make some changes.')
+        input('Press any key to proceed:')
+
+    # create colophon file if doesn't exist
+    colophon_path = os.path.join(no_sync_text_dir, 'colophon.xhtml')
+    if not os.path.exists(colophon_path):
+        print(f'File {colophon_path} is not found. Creating...')
+        colophon_template = env.get_template('colophon.xhtml')
+        colophon_content = colophon_template.render(
+            title=metadata['title'],
+            author=metadata['author'],
+            contributor=metadata.get('contributor', 'me'),
+            transcriber=metadata.get('transcriber', 'someone')
+        )
+        with open(colophon_path, 'x') as f:
+            f.write(colophon_content)
+
+        print(f'File {colophon_path} has been created. You may want to make some changes.')
+        input('Press any key to proceed:')
 
     # initialize epub files
     container_dir = os.path.join(tmp_dir, 'container')
@@ -288,14 +345,12 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     shutil.copy('templates/style.css', os.path.join(epub_styles_dir, 'style.css'))
 
     # copy resources to epub
-    for filename in os.listdir(audio_dir):
-        shutil.copy(os.path.join(audio_dir, filename), os.path.join(epub_audio_dir, filename))
-
-    for filename in os.listdir(text_dir):
-        shutil.copy(os.path.join(text_dir, filename), os.path.join(epub_text_dir, filename))
-
-    for filename in os.listdir(smil_dir):
-        shutil.copy(os.path.join(smil_dir, filename), os.path.join(epub_smil_dir, filename))
+    for from_, to in (
+        (audio_dir, epub_audio_dir), (sync_text_dir, epub_text_dir),
+        (no_sync_text_dir, epub_text_dir), (smil_dir, epub_smil_dir)
+        ):
+        for filename in os.listdir(from_):
+            shutil.copy(os.path.join(from_, filename), os.path.join(to, filename))
 
     # create package document
     audios = [
@@ -306,14 +361,24 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
         for filename in sorted(os.listdir(epub_audio_dir))
     ]
 
-    texts = [
+    sync_texts = [
         {
             'name': filename,
             'id': f'text{drop_ext(filename)}',
             'smil_id': f'smil{drop_ext(filename)}',
         }
-        for filename in sorted(os.listdir(epub_text_dir))
+        for filename in os.listdir(sync_text_dir)
     ]
+
+    no_sync_texts = [
+        {
+            'name': filename,
+            'id': drop_ext(filename),
+        }
+        for filename in os.listdir(no_sync_text_dir)
+    ]
+
+    texts = sorted(sync_texts + no_sync_texts, key=lambda x: x['name'])
 
     smils = [
         {
@@ -338,29 +403,14 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
         for filename, duration in zip(sorted(os.listdir(epub_smil_dir)), media_durations)
     ]
 
-    try:
-        with open(metadatafile, 'r') as f:
-            metadata = json.load(f)
-    except FileNotFoundError:
-        print('File metadata.json is not found. Please provide metadata')
-        metadata = {}
-        metadata['title'] = input('Title: ')
-        metadata['author'] = input('Author: ')
-        metadata['description'] = input('Description: ')
-        metadata['narrator'] = input('Narrator: ')
-        with open(metadatafile, 'w') as f:
-            json.dump(metadata, f, indent=2)
-        print('File metadata.json is created.')
-
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates/'))
     opf_template = env.get_template('content.opf')
     opf_content = opf_template.render({
         'uuid': metadata.get('uuid', uuid.uuid4()),
         'title': metadata['title'],
         'author': metadata['author'],
-        'description': metadata.get('description', 'No description'),
+        'description': metadata['description'],
         'narrator': metadata['narrator'],
-        'contributor': metadata.get('contributor', 'Unknown'),
+        'contributor': metadata.get('contributor', 'me'),
         'date': metadata.get('date', date.today().isoformat()),
         'modified': datetime.now().isoformat(' ', 'seconds'),
         'texts': texts,
@@ -371,19 +421,6 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     })
     with open(os.path.join(epub_dir, 'content.opf'), 'x') as f:
         f.write(opf_content)
-
-    content_files = [
-        {
-            'name': filename,
-            'toc_name': drop_ext(filename)
-        }
-        for filename in sorted(os.listdir(epub_text_dir))
-    ]
-
-    nav_template = env.get_template('nav.xhtml')
-    nav_content = nav_template.render(content_files=content_files)
-    with open(os.path.join(epub_text_dir, 'nav.xhtml'), 'x') as f:
-        f.write(nav_content)
 
     # create epub archive
     ebook_path = os.path.join(output_dir, 'ebook.epub')
@@ -397,7 +434,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
                 arcname = os.path.join(os.path.relpath(dirpath, container_dir), filename)
                 z.write(os.path.join(dirpath, filename), arcname)
 
-    shutil.rmtree(tmp_dir)
+    # shutil.rmtree(tmp_dir)
 
     print(f'The ebook has been successfully created and saved as {ebook_path}')
 
