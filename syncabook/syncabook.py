@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 from datetime import date, datetime, timedelta
 import json
@@ -16,6 +18,10 @@ import jinja2
 import progressbar
 
 from afaligner import align
+
+
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates/')
 
 
 def download_files(librivox_url, output_dir):
@@ -197,7 +203,7 @@ def textfiles_to_xhtmls(input_dir, output_dir, fragment_type):
             paragraphs.append(fragments)
         
         env = jinja2.Environment(
-            loader=jinja2.FileSystemLoader('templates/'),
+            loader=jinja2.FileSystemLoader(TEMPLATES_DIR),
             autoescape=True
         )
         template = env.get_template('text.xhtml')
@@ -289,7 +295,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
             json.dump(metadata, f, indent=2)
         print('File metadata.json is created.')
 
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates/'))
+    env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES_DIR))
 
     # create ToC file if doesn't exist
     nav_path = os.path.join(no_sync_text_dir, 'nav.xhtml')
@@ -343,9 +349,18 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     os.makedirs(epub_smil_dir)
     os.makedirs(epub_styles_dir)
 
-    shutil.copy('templates/mimetype', os.path.join(container_dir, 'mimetype'))
-    shutil.copy('templates/container.xml', os.path.join(container_dir, 'META-INF', 'container.xml'))
-    shutil.copy('templates/style.css', os.path.join(epub_styles_dir, 'style.css'))
+    shutil.copy(
+        os.path.join(TEMPLATES_DIR, 'mimetype'),
+        os.path.join(container_dir, 'mimetype')
+    )
+    shutil.copy(
+        os.path.join(TEMPLATES_DIR, 'container.xml'),
+        os.path.join(container_dir, 'META-INF', 'container.xml')
+    )
+    shutil.copy(
+        os.path.join(TEMPLATES_DIR, 'style.css'),
+        os.path.join(epub_styles_dir, 'style.css')
+    )
 
     # copy resources to epub
     for from_, to in (
@@ -437,7 +452,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
                 arcname = os.path.join(os.path.relpath(dirpath, container_dir), filename)
                 z.write(os.path.join(dirpath, filename), arcname)
 
-    # shutil.rmtree(tmp_dir)
+    shutil.rmtree(tmp_dir)
 
     print(f'The ebook has been successfully created and saved as {ebook_path}')
 
@@ -478,7 +493,7 @@ def parse_clockvalue(clockvalue):
     )
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command', required=True)
 
@@ -592,3 +607,7 @@ if __name__ == '__main__':
             alignment_radius=args.alignment_radius,
             alignment_skip_penalty=args.alignment_skip_penalty
         )
+
+
+if __name__ == '__main__':
+    main()
