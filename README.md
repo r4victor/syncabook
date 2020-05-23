@@ -83,9 +83,9 @@ We're asked for book's title, author and other information. `nav.xhtml` containi
 
 The ebooks produced are in EPUB3 format and can be opened in any EPUB3 reader. Unfortunately, read aloud feature is not well supported. Here is a list of apps, which I know of, that support it:
 
-* [Readium](https://chrome.google.com/webstore/detail/readium/fepbnnnkkadjhjahcafoaglimekefifl) – Chrome App. Unfortunately, Google is going to deprecate them.
+* [Readium](https://chrome.google.com/webstore/detail/readium/fepbnnnkkadjhjahcafoaglimekefifl) (Chrome App) – great read & listen experience. Unfortunately, Google is going to deprecate Chrome Apps.
 
-* [Adobe Digital Editions](https://www.adobe.com/la/solutions/ebook/digital-editions/download.html) (Windows, MacOS, iOS, Android) – not the best UI but the read aloud feature is implemented well.
+* [Adobe Digital Editions](https://www.adobe.com/la/solutions/ebook/digital-editions/download.html) (Windows, MacOS, iOS, Android) – fully supports EPUB3 standard. Not the best reading experience, though: text and audio seem out of sync.
 
 * [Menestrello](https://github.com/readbeyond/menestrello) (iOS, Android) – the best app to read & listen that was developed for this specific purpose. Unfortunately, no longer maintained and not even available on AppStore or Google Play. Still, .apk can be installed on Android.
 
