@@ -89,7 +89,7 @@ The ebooks produced are in EPUB3 format and can be opened in any EPUB3 reader. U
 
 * [Menestrello](https://github.com/readbeyond/menestrello) (iOS, Android) – the best app to read & listen that was developed for this specific purpose. Unfortunately, no longer maintained and not even available on AppStore or Google Play. Still, .apk can be installed on Android.
 
-Please let me know if you know of other apps that support EPUB3 with Media Overlay.
+Please let me know if you know of other apps that support EPUB3 with Media Overlays.
 
 ## Notes
 
