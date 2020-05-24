@@ -8,7 +8,12 @@ from .to_xhtml import textfiles_to_xhtml_files
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            'A set of tools for creating ebooks with synchronized text and audio (EPUB3 with Media Overlays).\n\n'
+            'To see what each command does enter $ syncabook `command_name` -h.'
+        )
+    )
     subparsers = parser.add_subparsers(dest='command', required=True)
 
     parser_split = subparsers.add_parser(

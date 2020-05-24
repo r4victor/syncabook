@@ -5,6 +5,9 @@ from .utils import get_number_of_digits_to_name
 
 
 def split_text(text_file, output_dir, mode, pattern, n):
+    """
+    Splits contents of `text_file` into several texts and saves them to `output_dir`.
+    """
     with open(text_file, 'r') as f:
             text = f.read()
 
@@ -13,71 +16,83 @@ def split_text(text_file, output_dir, mode, pattern, n):
         return
 
     if mode == 'opening':
-        n_files = split_text_by_opening(pattern, text, output_dir)
+        texts = _split_text_by_opening(pattern, text)
     elif mode == 'delimeter':
-        n_files = split_text_by_delimeter(pattern, text, output_dir)
+        texts = _split_text_by_delimeter(pattern, text)
     elif mode == 'equal':
         if n is None:
             print(f'\nERROR: --n is required in {mode} mode.\n')
-        
-        n_files = split_text_into_n_parts(n, text, output_dir)
+            return
 
-    if n_files > 0:
-        print(f'\nSplitting into {n_files} files is performed.\n')
+        texts = _split_text_into_n_parts(n, text, output_dir)
+    else:
+        print(f'\nERROR: Unknown mode {mode}.\n')
+
+    if len(texts) > 0:
+        _save_texts(texts, output_dir)
+        print(f'\nSplitting into {len(texts)} files is performed.\n')
 
 
-def split_text_by_opening(split_pattern, text, output_dir):
-    openings = re.findall(split_pattern, text)
+
+def _split_text_by_opening(pattern, text):
+    """
+    Splits text into parts identified by opening that matches `pattern`.
+    For example, --pattern='\n\nCHAPTER \\d+\n\n' may be used
+    to split text into chapters.
+    """
+    openings = re.findall(pattern, text)
 
     if len(openings) == 0:
         print(
-            f'\nERROR: No text matching pattern "{split_pattern}". '
+            f'\nNo text matching pattern "{pattern}". '
             'Splitting is not permformed.\n'
         )
-        return 0
+        return []
 
-    texts = re.split(split_pattern, text)
+    texts = re.split(pattern, text)
     texts = [d + t for d, t in zip(openings, texts[1:])]
-
-    save_texts(texts, output_dir)
-
-    return len(texts)
+    return texts
 
 
-def split_text_by_delimeter(split_pattern, text, output_dir):
-    texts = re.split(split_pattern, text)
+def _split_text_by_delimeter(pattern, text):
+    """
+    Splits text into parts separated by delimeter that matches `pattern`.
+    Delimeter is not included in the returned texts.
+    For example, --pattern='\n\n---------\n\n' may be used if 
+    chapter are separated by 8 dashes.
+    """
+    texts = re.split(pattern, text)
 
     if len(texts) == 0:
         print(
-            f'\nERROR: No text matching pattern "{split_pattern}". '
+            f'\nNo text matching pattern "{pattern}". '
             'Splitting is not permformed.\n'
         )
-        return
 
-    save_texts(texts, output_dir)
-
-    return len(texts)
+    return texts
 
 
-def split_text_into_n_parts(n, text, output_dir):
+def _split_text_into_n_parts(n, text, output_dir):
+    """
+    Splits text into `n` approximately equal parts.
+    The splitting is permformed only at paragraphs' boundaries.
+    """
     l = len(text) // n
 
     texts = []
 
-    j = 0
+    cur_part_start = 0
     for i in range(len(text)):
-        if i >= l + j and text[i] == text[i+1] == '\n':
-            texts.append(text[j:i+2])
-            j = i + 2
+        if i >= cur_part_start + l and text[i] == text[i+1] == '\n':
+            texts.append(text[cur_part_start:i+2])
+            cur_part_start = i + 2
 
-    texts.append(text[j:])
+    texts.append(text[cur_part_start:])
 
-    save_texts(texts, output_dir)
-
-    return len(texts)
+    return texts
 
 
-def save_texts(texts, output_dir):
+def _save_texts(texts, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     for i, text in enumerate(texts, start=1):

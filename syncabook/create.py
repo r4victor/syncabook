@@ -166,7 +166,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
 
     # calculate durations of Media Overlays
     media_durations = [
-        get_media_duration(os.path.join(epub_smil_dir, filename))
+        _get_media_duration(os.path.join(epub_smil_dir, filename))
         for filename in sorted(os.listdir(epub_smil_dir))
     ]
     total_duration = format_duration(sum(media_durations, timedelta()))
@@ -199,7 +199,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
         f.write(opf_content)
 
     # create epub archive
-    ebook_path = os.path.join(output_dir, f'{get_book_name(metadata["title"])}.epub')
+    ebook_path = os.path.join(output_dir, f'{_get_book_name(metadata["title"])}.epub')
 
     with ZipFile(ebook_path, 'w') as z:
         # mimetype must be first file in archive
@@ -215,18 +215,18 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     print(f'The ebook has been successfully created and saved as {ebook_path}')
 
 
-def get_media_duration(smil_file_path):
+def _get_media_duration(smil_file_path):
     with open(smil_file_path, 'r') as f:
         soup = BeautifulSoup(f.read(), 'xml')
 
     clips = soup.find_all('audio')
     return sum(
-        [parse_clockvalue(clip['clipEnd']) - parse_clockvalue(clip['clipBegin']) for clip in clips],
+        [_parse_clockvalue(clip['clipEnd']) - _parse_clockvalue(clip['clipBegin']) for clip in clips],
         timedelta(0)
     )
 
 
-def parse_clockvalue(clockvalue):
+def _parse_clockvalue(clockvalue):
     pattern = r'(?P<h>\d+):(?P<m>\d\d):(?P<s>\d\d).(?P<ms>\d\d\d)'
     m = re.match(pattern, clockvalue)
     return timedelta(
@@ -235,5 +235,5 @@ def parse_clockvalue(clockvalue):
     )
 
 
-def get_book_name(title):
+def _get_book_name(title):
     return title.replace(' ', '_').lower()
