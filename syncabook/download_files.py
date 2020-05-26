@@ -15,7 +15,7 @@ MAPPING_FILE = 'map.json'
 BOOKS_DIR = 'books'
 
 
-def download_files(librivox_url, output_dir):
+def download_files(librivox_url, output_dir, skip_text, skip_audio):
     """
     Downloads files needed to create an ebook.
 
@@ -29,66 +29,38 @@ def download_files(librivox_url, output_dir):
     with urllib.request.urlopen(librivox_url) as f:
         librivox_soup = BeautifulSoup(f.read(), 'lxml')
 
-    print('Searching for files in the synclibrivox repository...')
-    found = _download_synclibrivox_files(librivox_url, output_dir)
-    if found:
-        print(
-            f'This book has been found in the synclibrivox repository.'
-            f' Corresponding files have been downloaded to {output_dir}.'
+    if not skip_text:
+        print('Searching for files in the synclibrivox repository...')
+        found = _download_synclibrivox_files(librivox_url, output_dir)
+        if found:
+            print(
+                f'This book has been found in the synclibrivox repository.'
+                f' Corresponding files have been downloaded to {output_dir}.'
             )
-    else:
-        print(
-            f'The synclibrivox repository doesn\'t contain this book.\n'
-            'Downloading text from gutenberg.org...'
-        )
-        gutenberg_link = librivox_soup.find('a', {'href': re.compile(r'http://www.gutenberg.org/.*')})
-        if gutenberg_link is None:
-            print('Link to the gutenberg.org is not found. Text won\'t be downloaded.')
         else:
-            gutenberg_url = gutenberg_link['href']
+            print(
+                f'The synclibrivox repository doesn\'t contain this book.\n'
+                'Downloading text from gutenberg.org...'
+            )
+            gutenberg_link = librivox_soup.find(
+                'a', {'href': re.compile(r'http://www.gutenberg.org/.*')}
+            )
+            if gutenberg_link is None:
+                print('Link to the gutenberg.org is not found. Text won\'t be downloaded.')
+            else:
+                gutenberg_url = gutenberg_link['href']
+                _download_gutenberg_text(gutenberg_url, output_dir)
 
-            with urllib.request.urlopen(gutenberg_url) as f:
-                gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
-
-            text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
-            text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
-            text_path = os.path.join(output_dir, 'text.txt')
-
-            urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
-            print(f'Text has been downloaded and saved as {text_path}')
-
-    print('Downloading audio files...')
-    book_url = librivox_soup.find('a', class_='book-download-btn')['href']
-    local_filename, _ = urllib.request.urlretrieve(book_url, reporthook=ProgressBar())
-
-    audio_dir = os.path.join(output_dir, 'audio')
-
-    with ZipFile(local_filename) as z:
-        z.extractall(path=audio_dir)
-    print(f'Audio files have been downloaded to {audio_dir}')
-
-
-class ProgressBar():
-    def __init__(self):
-        self.pbar = None
-
-    def __call__(self, block_num, block_size, total_size):
-        if self.pbar is None:
-            self.pbar = progressbar.ProgressBar(maxval=total_size)
-            self.pbar.start()
-
-        downloaded = block_num * block_size
-
-        if downloaded < total_size:
-            self.pbar.update(downloaded)
-        else:
-            self.pbar.finish()
+    if not skip_audio:
+        print('Downloading audio files...')
+        audiobook_url = librivox_soup.find('a', class_='book-download-btn')['href']
+        _download_audio_files(audiobook_url, output_dir)
 
 
 def _download_synclibrivox_files(librivox_url, output_dir):
     """
     Downloads files from synclibrivox repository for a book with corresponding `librivox_url`.
-    If a book is not found is not found in the repository, returns False.
+    If a book is not found in the repository, returns False.
     Otherwise, returns True.
     """
     book_dir = _get_book_dir(librivox_url)
@@ -128,3 +100,42 @@ def _get_github_file_contents(file_path):
 
     with urllib.request.urlopen(download_url) as f:
         return f.read()
+
+
+def _download_gutenberg_text(gutenberg_url, output_dir):
+    with urllib.request.urlopen(gutenberg_url) as f:
+        gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
+
+    text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
+    text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
+    text_path = os.path.join(output_dir, 'text.txt')
+
+    urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
+    print(f'Text has been downloaded and saved as {text_path}')
+
+
+class ProgressBar():
+    def __init__(self):
+        self.pbar = None
+
+    def __call__(self, block_num, block_size, total_size):
+        if self.pbar is None:
+            self.pbar = progressbar.ProgressBar(maxval=total_size)
+            self.pbar.start()
+
+        downloaded = block_num * block_size
+
+        if downloaded < total_size:
+            self.pbar.update(downloaded)
+        else:
+            self.pbar.finish()
+
+
+def _download_audio_files(audiobook_url, output_dir):
+    local_filename, _ = urllib.request.urlretrieve(audiobook_url, reporthook=ProgressBar())
+
+    audio_dir = os.path.join(output_dir, 'audio')
+
+    with ZipFile(local_filename) as z:
+        z.extractall(path=audio_dir)
+    print(f'Audio files have been downloaded to {audio_dir}')

@@ -16,12 +16,26 @@ def main():
     )
     subparsers = parser.add_subparsers(dest='command', required=True)
 
-    parser_split = subparsers.add_parser(
+    parser_download = subparsers.add_parser(
         'download_files',
         description='Download text and audio files from the LibriVox page.'
     )
-    parser_split.add_argument('librivox_url')
-    parser_split.add_argument('output_dir')
+    parser_download.add_argument('librivox_url')
+    parser_download.add_argument('output_dir')
+    parser_download.add_argument(
+        '--skip-text', 
+        action='store_true',
+        dest='skip_text',
+        default=False,
+        help='Do not download any files from synclibrivox repository or gutenberg.org.'
+    )
+    parser_download.add_argument(
+        '--skip-audio', 
+        action='store_true',
+        dest='skip_audio',
+        default=False,
+        help='Do not download audio files.'
+    )
 
     parser_split = subparsers.add_parser(
         'split_text',
@@ -109,7 +123,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'download_files':
-        download_files(args.librivox_url, args.output_dir)
+        download_files(args.librivox_url, args.output_dir, args.skip_text, args.skip_audio)
     elif args.command == 'split_text':
         split_text(args.textfile, args.output_dir, args.mode, args.pattern, args.n)
     elif args.command == 'to_xhtml':
