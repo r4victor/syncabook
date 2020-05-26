@@ -30,14 +30,8 @@ def download_files(librivox_url, output_dir, skip_text, skip_audio):
         librivox_soup = BeautifulSoup(f.read(), 'lxml')
 
     if not skip_text:
-        print('Searching for files in the synclibrivox repository...')
         found = _download_synclibrivox_files(librivox_url, output_dir)
-        if found:
-            print(
-                f'This book has been found in the synclibrivox repository.'
-                f' Corresponding files have been downloaded to {output_dir}.'
-            )
-        else:
+        if not found:
             print(
                 f'The synclibrivox repository doesn\'t contain this book.\n'
                 'Downloading text from gutenberg.org...'
@@ -67,26 +61,11 @@ def _download_synclibrivox_files(librivox_url, output_dir):
     if book_dir is None:
         return False
     
+    print('The books has been found in the synclibrivox repository. Downloading files...')
     book_path = os.path.join(BOOKS_DIR, book_dir)
     _download_github_directory(book_path, relative_to=book_path, output_dir=output_dir)
+    print(f'All files have been downloaded and saved to {output_dir}')
     return True
-
-
-def _download_github_directory(path, relative_to='', output_dir=''):
-    url = urllib.parse.urljoin(GITHUB_CONTENTS_URL, path)
-    with urllib.request.urlopen(url) as f:
-        contents = json.loads(f.read())
-
-    os.makedirs(os.path.join(output_dir, os.path.relpath(path, relative_to)), exist_ok=True)
-
-    for content in contents:
-        if content['type'] == 'file':
-            urllib.request.urlretrieve(
-                content['download_url'],
-                os.path.join(output_dir, os.path.relpath(content['path'], relative_to))
-            )
-        elif content['type'] == 'dir':
-            _download_github_directory(content['path'], relative_to=relative_to, output_dir=output_dir)
 
 
 def _get_book_dir(librivox_url):
@@ -102,18 +81,26 @@ def _get_github_file_contents(file_path):
         return f.read()
 
 
-def _download_gutenberg_text(gutenberg_url, output_dir):
-    with urllib.request.urlopen(gutenberg_url) as f:
-        gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
+def _download_github_directory(path, relative_to='', output_dir=''):
+    url = urllib.parse.urljoin(GITHUB_CONTENTS_URL, path)
+    with urllib.request.urlopen(url) as f:
+        contents = json.loads(f.read())
 
-    text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
-    text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
-    text_path = os.path.join(output_dir, 'text.txt')
+    os.makedirs(os.path.join(output_dir, os.path.relpath(path, relative_to)), exist_ok=True)
 
-    urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
-    print(f'Text has been downloaded and saved as {text_path}')
+    for content in contents:
+        if content['type'] == 'file':
+            rel_path = os.path.relpath(content['path'], relative_to)
+            print(f'Downloading {rel_path}...')
+            urllib.request.urlretrieve(
+                content['download_url'],
+                os.path.join(output_dir, rel_path),
+                reporthook=ProgressBar()
+            )
+        elif content['type'] == 'dir':
+            _download_github_directory(content['path'], relative_to=relative_to, output_dir=output_dir)
 
-
+    
 class ProgressBar():
     def __init__(self):
         self.pbar = None
@@ -129,6 +116,18 @@ class ProgressBar():
             self.pbar.update(downloaded)
         else:
             self.pbar.finish()
+
+
+def _download_gutenberg_text(gutenberg_url, output_dir):
+    with urllib.request.urlopen(gutenberg_url) as f:
+        gutenberg_soup = BeautifulSoup(f.read(), 'lxml')
+
+    text_relative_url = gutenberg_soup.find('a', {'type': re.compile(r'text/plain.*')})['href']
+    text_absolute_url = urllib.parse.urljoin('http://www.gutenberg.org/', text_relative_url)
+    text_path = os.path.join(output_dir, 'text.txt')
+
+    urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
+    print(f'Text has been downloaded and saved as {text_path}')
 
 
 def _download_audio_files(audiobook_url, output_dir):
