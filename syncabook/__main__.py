@@ -44,7 +44,7 @@ def main():
     parser_split.add_argument('textfile')
     parser_split.add_argument('output_dir')
     parser_split.add_argument(
-        '-m', '--mode', dest='mode', choices=['delimeter', 'opening', 'equal'], default='opening',
+        '--m', '--mode', dest='mode', choices=['delimeter', 'opening', 'equal'], default='opening',
         help=(
             'opening mode splits text file by opening PATTERN, i.e. '
             'each file begins with a PATTERN.\n'
@@ -52,8 +52,8 @@ def main():
             'equal mode splits text file into N equal parts.'
         )
     )
-    parser_split.add_argument('-n', dest='n', type=int)
-    parser_split.add_argument('-p', '--pattern', dest='pattern')
+    parser_split.add_argument('--n', dest='n', type=int)
+    parser_split.add_argument('--p', '--pattern', dest='pattern')
 
     parser_to_xhtml = subparsers.add_parser(
         'to_xhtml',
@@ -62,11 +62,18 @@ def main():
     parser_to_xhtml.add_argument('input_dir')
     parser_to_xhtml.add_argument('output_dir')
     parser_to_xhtml.add_argument(
-        '-f', '--fragment-type', choices=['sentence', 'paragraph'],
-        dest='fragment_type', default='sentence',
-        help=(
-            'Determines how text is splitted into the fragments. Defaults to sentence.'
-        )
+        '--f', '--fragment-type',
+        choices=['sentence', 'paragraph'],
+        dest='fragment_type',
+        default='sentence',
+        help='Determines how text is splitted into the fragments. Defaults to sentence.'
+    )
+    parser_to_xhtml.add_argument(
+        '--include-heading',
+        action='store_true',
+        dest='include_heading',
+        default=False,
+        help='Convert first paragraph to a heading.'
     )
 
     parser_sync = subparsers.add_parser(
@@ -102,7 +109,7 @@ def main():
     # arguments common to both parsers
     for p in (parser_sync, parser_create):
         p.add_argument(
-            '-r', '--alignment-radius',
+            '--r', '--alignment-radius',
             dest='alignment_radius', type=int,
             help=(
                 'Parameter of the alignment algorithm that determines the trade-off'
@@ -111,7 +118,7 @@ def main():
             )
         )
         p.add_argument(
-            '-p', '--alignment-skip-penalty',
+            '--p', '--alignment-skip-penalty',
             dest='alignment_skip_penalty', type=float,
             help=(
                 'Parameter of the alignment algorithm that determines the cost'
@@ -127,7 +134,11 @@ def main():
     elif args.command == 'split_text':
         split_text(args.textfile, args.output_dir, args.mode, args.pattern, args.n)
     elif args.command == 'to_xhtml':
-        textfiles_to_xhtml_files(args.input_dir, args.output_dir, args.fragment_type)
+        textfiles_to_xhtml_files(
+            args.input_dir, args.output_dir,
+            fragment_type=args.fragment_type,
+            include_heading=args.include_heading,
+            )
     elif args.command == 'sync':
         sync(
             args.book_dir,

@@ -6,7 +6,7 @@ from . import TEMPLATES_DIR
 from .utils import drop_extension, get_number_of_digits_to_name
 
 
-def textfiles_to_xhtml_files(input_dir, output_dir, fragment_type):
+def textfiles_to_xhtml_files(input_dir, output_dir, fragment_type, include_heading=False):
     """
     Converts plain text files in `input_dir` to a list of XHTML files
     and saves them to `output_dir`.
@@ -21,17 +21,17 @@ def textfiles_to_xhtml_files(input_dir, output_dir, fragment_type):
         with open(os.path.join(input_dir, filename), 'r') as f:
             texts_contents.append(f.read())
 
-    xhtmls = _text_contents_to_xhtmls(texts_contents, fragment_type)
+    xhtmls = _text_contents_to_xhtmls(texts_contents, fragment_type, include_heading)
 
     for filename, xhtml in zip(input_filenames, xhtmls):
         file_path = os.path.join(output_dir, f'{drop_extension(filename)}.xhtml')
-        with open(file_path, 'x') as f:
+        with open(file_path, 'w') as f:
             f.write(xhtml)
 
     print(f'{len(texts_contents)} plain text files have been converted to XHTML.')
 
 
-def _text_contents_to_xhtmls(texts_contents, fragment_type):
+def _text_contents_to_xhtmls(texts_contents, fragment_type, include_heading):
     texts = [_get_paragraphs(texts_content, fragment_type) for texts_content in texts_contents]
 
     # calculate total number of fragments to give fragments proper ids
@@ -49,13 +49,18 @@ def _text_contents_to_xhtmls(texts_contents, fragment_type):
                 fragments.append({'id': f'f{fragment_id:0>{n}}', 'text': f})
                 fragment_id += 1
             paragraphs.append(fragments)
+
+        heading = None
+        if include_heading:
+            heading = paragraphs[0][0]
+            paragraphs = paragraphs[1:]
         
         env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(TEMPLATES_DIR),
             autoescape=True
         )
         template = env.get_template('text.xhtml')
-        xhtml = template.render(paragraphs=paragraphs)
+        xhtml = template.render(heading=heading, paragraphs=paragraphs)
         xhtmls.append(xhtml)
 
     return xhtmls
