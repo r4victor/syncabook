@@ -44,8 +44,8 @@ In order to prepare such a structure <b>syncabook</b> provides a set of tools. H
 
 From the start we have an empty directory named `ebooks/my_ebook/`. Then we need to get an audiobook and save it in `ebooks/my_ebook/audio/`. We also need to get a text. We save it, for example, as `ebooks/my_ebook/text.txt`. Now we need to convert plain text to a list of XHTML files. `split_text` command can help us to split one plain text file into a list of plain text files and `to_xhtml` command converts a list of plain text files to a list of XHTML files. What's left is to synchronize text and audio. We may use `sync` command to do a synchronization and produce a list of SMIL files, or we may just use `create` command that will do a synchronization as well as create `nav.xhtml` file containing a table of contents and `colophon.xhtml` to credit contributors asking us for all the necessary information in the process and saving it as `ebooks/my_ebook/metadata.json`.
 
-If you want to create an ebook for a LibriVox recording, `download_files` command lets you automatically download all audio files from librivox.org and transcribed text from gutenberg.org. Moreover, if someone has produced an ebook for that recording and contributed prepared XHTML and SMIL files to a 
-[synclibrivox](https://github.com/r4victor/synclibrivox) repository, all you need to do is to run `create` command.
+If you want to create an ebook for a LibriVox recording, `download_files` command lets you automatically download the audio files from librivox.org and transcribed text from gutenberg.org. Moreover, if someone has produced an ebook for that recording and contributed prepared XHTML and SMIL files to the 
+[synclibrivox](https://github.com/r4victor/synclibrivox) repository, `download_files` command gets them as well and all you are left to do is to run `create` command.
 
 ## Usage example
 
@@ -78,6 +78,8 @@ $ syncabook create civil_disobedience/
 ```
 
 We're asked for book's title, author and other information. `nav.xhtml` containing a table of contents and `colophon.xhtml` to credit contributors are generated and placed in `civil_disobedience/no_sync_text/`. We make some changes in `nav.xhtml` and proceed. Congrats! Our ebook is created and saved in `civil_disobedience/out/`.
+
+See [synclibrivox](https://github.com/r4victor/synclibrivox) for this and other ebooks.
 
 ## How to read and listen
 
