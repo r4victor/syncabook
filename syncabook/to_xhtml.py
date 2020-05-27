@@ -52,7 +52,10 @@ def _text_contents_to_xhtmls(texts_contents, fragment_type, include_heading):
 
         heading = None
         if include_heading:
-            heading = paragraphs[0][0]
+            heading = {
+                'id': paragraphs[0][0]['id'],
+                'text': ''. join(f['text'] for f in paragraphs[0])
+            }
             paragraphs = paragraphs[1:]
         
         env = jinja2.Environment(
