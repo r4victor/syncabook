@@ -9,17 +9,16 @@ The synchronization is done automatically using [afaligner](https://github.com/r
 ## Requirements
 
 * Python (>= 3.6)
-* [afaligner](https://github.com/r4victor/afaligner)
+* [afaligner](https://github.com/r4victor/afaligner) (optional – required only for synchronization step)
 * Python packages: `beautifulsoup4`, `Jinja2`, `lxml`, `progressbar2`
 
 ## Installation
 
-1. Install [afaligner](https://github.com/r4victor/afaligner)
-2. Get <b>syncabook</b>:
+1. Get <b>syncabook</b>:
 ```
 $ git clone https://github.com/r4victor/syncabook/ && cd syncabook
 ```
-3. Create source distribution and install:
+2. Create source distribution and install:
 ```
 $ python setup.py sdist && pip install dist/syncabook*.tar.gz
 ```
@@ -29,6 +28,8 @@ Now, <b>syncabook</b> is installed and can be run simply from command line:
 ```
 $ syncabook -h
 ```
+
+3. If you're going to produce your own books, your must install [afaligner](https://github.com/r4victor/afaligner) to do a synchronization. If you only need to assemble ebooks from prepared files like those in the [synclibrivox](https://github.com/r4victor/synclibrivox) repository, this step can be omitted.
 
 ## Ebook production
 
