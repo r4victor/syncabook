@@ -59,13 +59,15 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     nav_path = os.path.join(no_sync_text_dir, 'nav.xhtml')
     if not os.path.exists(nav_path):
         print(f'File {nav_path} is not found. Creating...')
-        content_files = [
-            {
+        content_files = []
+        for i, filename in enumerate(sorted(os.listdir(sync_text_dir)), start=1):
+            with open(os.path.join(sync_text_dir, filename)) as f:
+                soup = BeautifulSoup(f.read(), 'xml')
+            heading = soup.find('h2')
+            content_files.append({
                 'name': filename,
-                'toc_name': drop_extension(filename)
-            }
-            for filename in sorted(os.listdir(sync_text_dir))
-        ]
+                'toc_name': heading.string if heading is not None else i
+            })
         nav_template = env.get_template('nav.xhtml')
         nav_content = nav_template.render(content_files=content_files)
         with open(nav_path, 'x') as f:
