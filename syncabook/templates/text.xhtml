@@ -6,18 +6,16 @@
   </head>
   <body>
     <section epub:type="bodymatter chapter">
-      <hr class="sepBar"/>
       {% if heading -%}
       <h2 id="{{ heading.id }}">{{ heading.text }}</h2>
       {%- endif %}
-      {% for paragraph in paragraphs -%}
+      {%- for paragraph in paragraphs %}
       <p>
       {% for fragment in paragraph -%}
       <span id="{{ fragment.id }}">{{ fragment.text }}</span>
       {% endfor -%}
       </p>
-      {% endfor -%}
-      <hr class="sepBar"/>
+      {%- endfor %}
     </section>
   </body>
 </html>
