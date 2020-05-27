@@ -6,9 +6,9 @@
   </head>
   <body>
     <section epub:type="bodymatter chapter">
-      {% if heading -%}
+      {%- if heading %}
       <h2 id="{{ heading.id }}">{{ heading.text }}</h2>
-      {%- endif %}
+      {%- endif -%}
       {%- for paragraph in paragraphs %}
       <p>
       {% for fragment in paragraph -%}
