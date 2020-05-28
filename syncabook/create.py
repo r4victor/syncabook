@@ -53,7 +53,7 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
             json.dump(metadata, f, indent=2)
         print('File metadata.json is created.')
 
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES_DIR))
+    env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES_DIR), autoescape=True)
 
     # create ToC file if doesn't exist
     nav_path = os.path.join(no_sync_text_dir, 'nav.xhtml')
@@ -151,9 +151,9 @@ def create_ebook(book_dir, alignment_radius, alignment_skip_penalty):
     no_sync_texts = [
         {
             'name': filename,
-            'id': drop_extension(filename),
+            'id': f'text{drop_extension(filename)}',
         }
-        for filename in os.listdir(no_sync_text_dir)
+        for filename in os.listdir(no_sync_text_dir) if filename != 'nav.xhtml'
     ]
 
     texts = sorted(sync_texts + no_sync_texts, key=lambda x: x['name'])
