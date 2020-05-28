@@ -31,6 +31,27 @@ $ syncabook -h
 
 3. If you're going to produce your own books, your must install [afaligner](https://github.com/r4victor/afaligner) to do a synchronization. If you only need to assemble ebooks from prepared files like those in the [synclibrivox](https://github.com/r4victor/synclibrivox) repository, this step can be omitted.
 
+### Installation via Docker
+
+Installing <b>afaligner</b> with all its dependencies may seem tedious. If it does for you, then consider using <b>syncabook</b> as a Docker container.
+
+1. Get <b>syncabook</b>:
+```
+$ git clone https://github.com/r4victor/syncabook/ && cd syncabook
+```
+
+2. Create a Docker image:
+```
+$ docker build -t syncabook .
+```
+
+Now, <b>syncabook</b> can be run as a Docker container. The only difference with the native installation is that you have to mount a volume with `-v` option:
+
+```
+$ docker run -v "$PWD":/books/mybook syncabook sync /books/mybook
+```
+
+
 ## Ebook production
 
 The ebook is assembled from source files in ebook's root directory which includes:
