@@ -21,7 +21,7 @@
     <dc:date>{{ date }}</dc:date>
 
     <dc:publisher>synclibrivox</dc:publisher>
-    <dc:rights>CC BY-SA 4.0</dc:rights>
+    <dc:rights>CC BY 4.0</dc:rights>
     
     <dc:description>{{ description }}</dc:description>
     
