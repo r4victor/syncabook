@@ -1,0 +1,658 @@
+<smil xmlns="http://www.w3.org/ns/SMIL" xmlns:epub="http://www.idpf.org/2007/ops" version="3.0">
+  <body>
+    <seq id="seq1" epub:textref="../text/2.xhtml">
+      <par id="par001">
+        <text src="../text/2.xhtml#f175"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:04.960" clipEnd="0:00:08.240"/>
+      </par>
+      <par id="par002">
+        <text src="../text/2.xhtml#f176"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:08.240" clipEnd="0:00:31.400"/>
+      </par>
+      <par id="par003">
+        <text src="../text/2.xhtml#f177"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:31.400" clipEnd="0:00:44.440"/>
+      </par>
+      <par id="par004">
+        <text src="../text/2.xhtml#f178"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:44.440" clipEnd="0:00:50.840"/>
+      </par>
+      <par id="par005">
+        <text src="../text/2.xhtml#f179"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:50.840" clipEnd="0:00:59.240"/>
+      </par>
+      <par id="par006">
+        <text src="../text/2.xhtml#f180"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:00:59.240" clipEnd="0:01:12.880"/>
+      </par>
+      <par id="par007">
+        <text src="../text/2.xhtml#f181"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:12.880" clipEnd="0:01:24.920"/>
+      </par>
+      <par id="par008">
+        <text src="../text/2.xhtml#f182"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:24.920" clipEnd="0:01:29.000"/>
+      </par>
+      <par id="par009">
+        <text src="../text/2.xhtml#f183"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:29.000" clipEnd="0:01:36.000"/>
+      </par>
+      <par id="par010">
+        <text src="../text/2.xhtml#f184"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:36.000" clipEnd="0:01:45.160"/>
+      </par>
+      <par id="par011">
+        <text src="../text/2.xhtml#f185"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:45.160" clipEnd="0:01:48.880"/>
+      </par>
+      <par id="par012">
+        <text src="../text/2.xhtml#f186"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:01:48.880" clipEnd="0:02:25.120"/>
+      </par>
+      <par id="par013">
+        <text src="../text/2.xhtml#f187"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:02:25.120" clipEnd="0:02:50.240"/>
+      </par>
+      <par id="par014">
+        <text src="../text/2.xhtml#f188"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:02:50.240" clipEnd="0:02:56.760"/>
+      </par>
+      <par id="par015">
+        <text src="../text/2.xhtml#f189"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:02:56.760" clipEnd="0:03:09.000"/>
+      </par>
+      <par id="par016">
+        <text src="../text/2.xhtml#f190"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:09.000" clipEnd="0:03:10.840"/>
+      </par>
+      <par id="par017">
+        <text src="../text/2.xhtml#f191"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:10.840" clipEnd="0:03:18.640"/>
+      </par>
+      <par id="par018">
+        <text src="../text/2.xhtml#f192"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:18.640" clipEnd="0:03:25.320"/>
+      </par>
+      <par id="par019">
+        <text src="../text/2.xhtml#f193"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:25.320" clipEnd="0:03:31.480"/>
+      </par>
+      <par id="par020">
+        <text src="../text/2.xhtml#f194"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:31.480" clipEnd="0:03:41.040"/>
+      </par>
+      <par id="par021">
+        <text src="../text/2.xhtml#f195"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:41.040" clipEnd="0:03:49.000"/>
+      </par>
+      <par id="par022">
+        <text src="../text/2.xhtml#f196"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:03:49.000" clipEnd="0:04:25.960"/>
+      </par>
+      <par id="par023">
+        <text src="../text/2.xhtml#f197"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:04:25.960" clipEnd="0:04:33.880"/>
+      </par>
+      <par id="par024">
+        <text src="../text/2.xhtml#f198"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:04:33.880" clipEnd="0:04:39.240"/>
+      </par>
+      <par id="par025">
+        <text src="../text/2.xhtml#f199"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:04:39.240" clipEnd="0:04:51.640"/>
+      </par>
+      <par id="par026">
+        <text src="../text/2.xhtml#f200"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:04:51.640" clipEnd="0:04:58.480"/>
+      </par>
+      <par id="par027">
+        <text src="../text/2.xhtml#f201"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:04:58.480" clipEnd="0:05:03.120"/>
+      </par>
+      <par id="par028">
+        <text src="../text/2.xhtml#f202"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:05:03.120" clipEnd="0:05:16.800"/>
+      </par>
+      <par id="par029">
+        <text src="../text/2.xhtml#f203"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:05:16.800" clipEnd="0:05:24.960"/>
+      </par>
+      <par id="par030">
+        <text src="../text/2.xhtml#f204"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:05:24.960" clipEnd="0:05:47.960"/>
+      </par>
+      <par id="par031">
+        <text src="../text/2.xhtml#f205"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:05:47.960" clipEnd="0:06:01.800"/>
+      </par>
+      <par id="par032">
+        <text src="../text/2.xhtml#f206"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:06:01.800" clipEnd="0:06:14.440"/>
+      </par>
+      <par id="par033">
+        <text src="../text/2.xhtml#f207"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:06:14.440" clipEnd="0:06:18.040"/>
+      </par>
+      <par id="par034">
+        <text src="../text/2.xhtml#f208"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:06:18.040" clipEnd="0:06:44.240"/>
+      </par>
+      <par id="par035">
+        <text src="../text/2.xhtml#f209"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:06:44.240" clipEnd="0:06:55.520"/>
+      </par>
+      <par id="par036">
+        <text src="../text/2.xhtml#f210"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:06:55.520" clipEnd="0:07:08.040"/>
+      </par>
+      <par id="par037">
+        <text src="../text/2.xhtml#f211"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:08.040" clipEnd="0:07:15.960"/>
+      </par>
+      <par id="par038">
+        <text src="../text/2.xhtml#f212"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:15.960" clipEnd="0:07:21.600"/>
+      </par>
+      <par id="par039">
+        <text src="../text/2.xhtml#f213"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:21.600" clipEnd="0:07:28.520"/>
+      </par>
+      <par id="par040">
+        <text src="../text/2.xhtml#f214"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:28.520" clipEnd="0:07:37.600"/>
+      </par>
+      <par id="par041">
+        <text src="../text/2.xhtml#f215"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:37.600" clipEnd="0:07:51.720"/>
+      </par>
+      <par id="par042">
+        <text src="../text/2.xhtml#f216"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:07:51.720" clipEnd="0:08:03.680"/>
+      </par>
+      <par id="par043">
+        <text src="../text/2.xhtml#f217"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:03.680" clipEnd="0:08:20.520"/>
+      </par>
+      <par id="par044">
+        <text src="../text/2.xhtml#f218"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:20.520" clipEnd="0:08:29.680"/>
+      </par>
+      <par id="par045">
+        <text src="../text/2.xhtml#f219"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:29.680" clipEnd="0:08:36.480"/>
+      </par>
+      <par id="par046">
+        <text src="../text/2.xhtml#f220"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:36.480" clipEnd="0:08:39.440"/>
+      </par>
+      <par id="par047">
+        <text src="../text/2.xhtml#f221"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:39.440" clipEnd="0:08:42.240"/>
+      </par>
+      <par id="par048">
+        <text src="../text/2.xhtml#f222"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:42.240" clipEnd="0:08:45.360"/>
+      </par>
+      <par id="par049">
+        <text src="../text/2.xhtml#f223"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:45.360" clipEnd="0:08:47.840"/>
+      </par>
+      <par id="par050">
+        <text src="../text/2.xhtml#f224"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:47.840" clipEnd="0:08:53.080"/>
+      </par>
+      <par id="par051">
+        <text src="../text/2.xhtml#f225"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:53.080" clipEnd="0:08:56.880"/>
+      </par>
+      <par id="par052">
+        <text src="../text/2.xhtml#f226"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:08:56.880" clipEnd="0:09:02.840"/>
+      </par>
+      <par id="par053">
+        <text src="../text/2.xhtml#f227"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:02.840" clipEnd="0:09:05.920"/>
+      </par>
+      <par id="par054">
+        <text src="../text/2.xhtml#f228"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:05.920" clipEnd="0:09:13.320"/>
+      </par>
+      <par id="par055">
+        <text src="../text/2.xhtml#f229"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:13.320" clipEnd="0:09:19.280"/>
+      </par>
+      <par id="par056">
+        <text src="../text/2.xhtml#f230"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:19.280" clipEnd="0:09:22.880"/>
+      </par>
+      <par id="par057">
+        <text src="../text/2.xhtml#f231"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:22.880" clipEnd="0:09:26.400"/>
+      </par>
+      <par id="par058">
+        <text src="../text/2.xhtml#f232"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:26.400" clipEnd="0:09:31.560"/>
+      </par>
+      <par id="par059">
+        <text src="../text/2.xhtml#f233"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:31.560" clipEnd="0:09:35.000"/>
+      </par>
+      <par id="par060">
+        <text src="../text/2.xhtml#f234"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:35.000" clipEnd="0:09:55.120"/>
+      </par>
+      <par id="par061">
+        <text src="../text/2.xhtml#f235"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:09:55.120" clipEnd="0:10:02.800"/>
+      </par>
+      <par id="par062">
+        <text src="../text/2.xhtml#f236"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:02.800" clipEnd="0:10:06.320"/>
+      </par>
+      <par id="par063">
+        <text src="../text/2.xhtml#f237"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:06.320" clipEnd="0:10:12.960"/>
+      </par>
+      <par id="par064">
+        <text src="../text/2.xhtml#f238"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:12.960" clipEnd="0:10:24.000"/>
+      </par>
+      <par id="par065">
+        <text src="../text/2.xhtml#f239"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:24.000" clipEnd="0:10:36.640"/>
+      </par>
+      <par id="par066">
+        <text src="../text/2.xhtml#f240"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:36.640" clipEnd="0:10:46.720"/>
+      </par>
+      <par id="par067">
+        <text src="../text/2.xhtml#f241"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:10:46.720" clipEnd="0:11:03.440"/>
+      </par>
+      <par id="par068">
+        <text src="../text/2.xhtml#f242"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:11:03.440" clipEnd="0:11:18.280"/>
+      </par>
+      <par id="par069">
+        <text src="../text/2.xhtml#f243"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:11:18.280" clipEnd="0:11:36.440"/>
+      </par>
+      <par id="par070">
+        <text src="../text/2.xhtml#f244"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:11:36.440" clipEnd="0:11:45.960"/>
+      </par>
+      <par id="par071">
+        <text src="../text/2.xhtml#f245"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:11:45.960" clipEnd="0:12:06.640"/>
+      </par>
+      <par id="par072">
+        <text src="../text/2.xhtml#f246"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:06.640" clipEnd="0:12:16.280"/>
+      </par>
+      <par id="par073">
+        <text src="../text/2.xhtml#f247"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:16.280" clipEnd="0:12:25.760"/>
+      </par>
+      <par id="par074">
+        <text src="../text/2.xhtml#f248"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:25.760" clipEnd="0:12:38.640"/>
+      </par>
+      <par id="par075">
+        <text src="../text/2.xhtml#f249"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:38.640" clipEnd="0:12:46.160"/>
+      </par>
+      <par id="par076">
+        <text src="../text/2.xhtml#f250"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:46.160" clipEnd="0:12:57.040"/>
+      </par>
+      <par id="par077">
+        <text src="../text/2.xhtml#f251"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:12:57.040" clipEnd="0:13:08.440"/>
+      </par>
+      <par id="par078">
+        <text src="../text/2.xhtml#f252"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:08.440" clipEnd="0:13:12.400"/>
+      </par>
+      <par id="par079">
+        <text src="../text/2.xhtml#f253"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:12.400" clipEnd="0:13:24.160"/>
+      </par>
+      <par id="par080">
+        <text src="../text/2.xhtml#f254"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:24.160" clipEnd="0:13:27.640"/>
+      </par>
+      <par id="par081">
+        <text src="../text/2.xhtml#f255"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:27.640" clipEnd="0:13:30.240"/>
+      </par>
+      <par id="par082">
+        <text src="../text/2.xhtml#f256"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:30.240" clipEnd="0:13:34.000"/>
+      </par>
+      <par id="par083">
+        <text src="../text/2.xhtml#f257"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:34.000" clipEnd="0:13:40.120"/>
+      </par>
+      <par id="par084">
+        <text src="../text/2.xhtml#f258"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:40.120" clipEnd="0:13:44.440"/>
+      </par>
+      <par id="par085">
+        <text src="../text/2.xhtml#f259"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:44.440" clipEnd="0:13:57.880"/>
+      </par>
+      <par id="par086">
+        <text src="../text/2.xhtml#f260"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:13:57.880" clipEnd="0:14:09.400"/>
+      </par>
+      <par id="par087">
+        <text src="../text/2.xhtml#f261"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:14:09.400" clipEnd="0:14:24.560"/>
+      </par>
+      <par id="par088">
+        <text src="../text/2.xhtml#f262"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:14:24.560" clipEnd="0:14:51.200"/>
+      </par>
+      <par id="par089">
+        <text src="../text/2.xhtml#f263"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:14:51.200" clipEnd="0:14:54.960"/>
+      </par>
+      <par id="par090">
+        <text src="../text/2.xhtml#f264"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:14:54.960" clipEnd="0:15:42.000"/>
+      </par>
+      <par id="par091">
+        <text src="../text/2.xhtml#f265"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:15:42.000" clipEnd="0:15:52.240"/>
+      </par>
+      <par id="par092">
+        <text src="../text/2.xhtml#f266"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:15:52.240" clipEnd="0:16:16.480"/>
+      </par>
+      <par id="par093">
+        <text src="../text/2.xhtml#f267"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:16:16.480" clipEnd="0:16:21.600"/>
+      </par>
+      <par id="par094">
+        <text src="../text/2.xhtml#f268"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:16:21.600" clipEnd="0:16:48.520"/>
+      </par>
+      <par id="par095">
+        <text src="../text/2.xhtml#f269"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:16:48.520" clipEnd="0:16:53.880"/>
+      </par>
+      <par id="par096">
+        <text src="../text/2.xhtml#f270"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:16:53.880" clipEnd="0:17:09.440"/>
+      </par>
+      <par id="par097">
+        <text src="../text/2.xhtml#f271"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:17:09.440" clipEnd="0:17:14.240"/>
+      </par>
+      <par id="par098">
+        <text src="../text/2.xhtml#f272"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:17:14.240" clipEnd="0:17:21.560"/>
+      </par>
+      <par id="par099">
+        <text src="../text/2.xhtml#f273"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:17:21.560" clipEnd="0:17:35.640"/>
+      </par>
+      <par id="par100">
+        <text src="../text/2.xhtml#f274"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:17:35.640" clipEnd="0:17:48.920"/>
+      </par>
+      <par id="par101">
+        <text src="../text/2.xhtml#f275"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:17:48.920" clipEnd="0:18:03.280"/>
+      </par>
+      <par id="par102">
+        <text src="../text/2.xhtml#f276"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:03.280" clipEnd="0:18:18.840"/>
+      </par>
+      <par id="par103">
+        <text src="../text/2.xhtml#f277"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:18.840" clipEnd="0:18:22.280"/>
+      </par>
+      <par id="par104">
+        <text src="../text/2.xhtml#f278"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:22.280" clipEnd="0:18:32.600"/>
+      </par>
+      <par id="par105">
+        <text src="../text/2.xhtml#f279"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:32.600" clipEnd="0:18:38.760"/>
+      </par>
+      <par id="par106">
+        <text src="../text/2.xhtml#f280"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:38.760" clipEnd="0:18:53.680"/>
+      </par>
+      <par id="par107">
+        <text src="../text/2.xhtml#f281"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:18:53.680" clipEnd="0:19:03.520"/>
+      </par>
+      <par id="par108">
+        <text src="../text/2.xhtml#f282"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:19:03.520" clipEnd="0:19:32.720"/>
+      </par>
+      <par id="par109">
+        <text src="../text/2.xhtml#f283"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:19:32.720" clipEnd="0:19:42.880"/>
+      </par>
+      <par id="par110">
+        <text src="../text/2.xhtml#f284"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:19:42.880" clipEnd="0:19:45.840"/>
+      </par>
+      <par id="par111">
+        <text src="../text/2.xhtml#f285"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:19:45.840" clipEnd="0:20:11.680"/>
+      </par>
+      <par id="par112">
+        <text src="../text/2.xhtml#f286"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:20:11.680" clipEnd="0:20:22.200"/>
+      </par>
+      <par id="par113">
+        <text src="../text/2.xhtml#f287"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:20:22.200" clipEnd="0:20:45.600"/>
+      </par>
+      <par id="par114">
+        <text src="../text/2.xhtml#f288"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:20:45.600" clipEnd="0:21:06.640"/>
+      </par>
+      <par id="par115">
+        <text src="../text/2.xhtml#f289"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:06.640" clipEnd="0:21:10.360"/>
+      </par>
+      <par id="par116">
+        <text src="../text/2.xhtml#f290"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:10.360" clipEnd="0:21:17.840"/>
+      </par>
+      <par id="par117">
+        <text src="../text/2.xhtml#f291"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:17.840" clipEnd="0:21:24.120"/>
+      </par>
+      <par id="par118">
+        <text src="../text/2.xhtml#f292"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:24.120" clipEnd="0:21:27.480"/>
+      </par>
+      <par id="par119">
+        <text src="../text/2.xhtml#f293"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:27.480" clipEnd="0:21:46.920"/>
+      </par>
+      <par id="par120">
+        <text src="../text/2.xhtml#f294"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:21:46.920" clipEnd="0:22:04.760"/>
+      </par>
+      <par id="par121">
+        <text src="../text/2.xhtml#f295"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:22:04.760" clipEnd="0:22:16.040"/>
+      </par>
+      <par id="par122">
+        <text src="../text/2.xhtml#f296"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:22:16.040" clipEnd="0:22:46.880"/>
+      </par>
+      <par id="par123">
+        <text src="../text/2.xhtml#f297"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:22:46.880" clipEnd="0:22:54.400"/>
+      </par>
+      <par id="par124">
+        <text src="../text/2.xhtml#f298"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:22:54.400" clipEnd="0:22:59.520"/>
+      </par>
+      <par id="par125">
+        <text src="../text/2.xhtml#f299"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:22:59.520" clipEnd="0:23:14.880"/>
+      </par>
+      <par id="par126">
+        <text src="../text/2.xhtml#f300"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:23:14.880" clipEnd="0:23:26.960"/>
+      </par>
+      <par id="par127">
+        <text src="../text/2.xhtml#f301"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:23:26.960" clipEnd="0:23:35.520"/>
+      </par>
+      <par id="par128">
+        <text src="../text/2.xhtml#f302"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:23:35.520" clipEnd="0:23:41.360"/>
+      </par>
+      <par id="par129">
+        <text src="../text/2.xhtml#f303"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:23:41.360" clipEnd="0:23:58.360"/>
+      </par>
+      <par id="par130">
+        <text src="../text/2.xhtml#f304"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:23:58.360" clipEnd="0:24:04.400"/>
+      </par>
+      <par id="par131">
+        <text src="../text/2.xhtml#f305"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:04.400" clipEnd="0:24:10.480"/>
+      </par>
+      <par id="par132">
+        <text src="../text/2.xhtml#f306"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:10.480" clipEnd="0:24:25.120"/>
+      </par>
+      <par id="par133">
+        <text src="../text/2.xhtml#f307"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:25.120" clipEnd="0:24:35.960"/>
+      </par>
+      <par id="par134">
+        <text src="../text/2.xhtml#f308"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:35.960" clipEnd="0:24:52.800"/>
+      </par>
+      <par id="par135">
+        <text src="../text/2.xhtml#f309"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:52.800" clipEnd="0:24:59.000"/>
+      </par>
+      <par id="par136">
+        <text src="../text/2.xhtml#f310"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:24:59.000" clipEnd="0:25:04.040"/>
+      </par>
+      <par id="par137">
+        <text src="../text/2.xhtml#f311"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:04.040" clipEnd="0:25:10.720"/>
+      </par>
+      <par id="par138">
+        <text src="../text/2.xhtml#f312"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:10.720" clipEnd="0:25:20.320"/>
+      </par>
+      <par id="par139">
+        <text src="../text/2.xhtml#f313"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:20.320" clipEnd="0:25:27.480"/>
+      </par>
+      <par id="par140">
+        <text src="../text/2.xhtml#f314"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:27.480" clipEnd="0:25:31.960"/>
+      </par>
+      <par id="par141">
+        <text src="../text/2.xhtml#f315"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:31.960" clipEnd="0:25:34.960"/>
+      </par>
+      <par id="par142">
+        <text src="../text/2.xhtml#f316"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:34.960" clipEnd="0:25:38.320"/>
+      </par>
+      <par id="par143">
+        <text src="../text/2.xhtml#f317"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:25:38.320" clipEnd="0:26:57.160"/>
+      </par>
+      <par id="par144">
+        <text src="../text/2.xhtml#f318"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:26:57.160" clipEnd="0:27:05.480"/>
+      </par>
+      <par id="par145">
+        <text src="../text/2.xhtml#f319"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:05.480" clipEnd="0:27:11.920"/>
+      </par>
+      <par id="par146">
+        <text src="../text/2.xhtml#f320"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:11.920" clipEnd="0:27:38.240"/>
+      </par>
+      <par id="par147">
+        <text src="../text/2.xhtml#f321"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:38.240" clipEnd="0:27:43.200"/>
+      </par>
+      <par id="par148">
+        <text src="../text/2.xhtml#f322"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:43.200" clipEnd="0:27:46.240"/>
+      </par>
+      <par id="par149">
+        <text src="../text/2.xhtml#f323"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:46.240" clipEnd="0:27:59.080"/>
+      </par>
+      <par id="par150">
+        <text src="../text/2.xhtml#f324"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:27:59.080" clipEnd="0:28:08.120"/>
+      </par>
+      <par id="par151">
+        <text src="../text/2.xhtml#f325"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:28:08.120" clipEnd="0:28:17.680"/>
+      </par>
+      <par id="par152">
+        <text src="../text/2.xhtml#f326"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:28:17.680" clipEnd="0:28:27.480"/>
+      </par>
+      <par id="par153">
+        <text src="../text/2.xhtml#f327"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:28:27.480" clipEnd="0:28:42.480"/>
+      </par>
+      <par id="par154">
+        <text src="../text/2.xhtml#f328"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:28:42.480" clipEnd="0:29:00.720"/>
+      </par>
+      <par id="par155">
+        <text src="../text/2.xhtml#f329"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:00.720" clipEnd="0:29:22.240"/>
+      </par>
+      <par id="par156">
+        <text src="../text/2.xhtml#f330"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:22.240" clipEnd="0:29:28.840"/>
+      </par>
+      <par id="par157">
+        <text src="../text/2.xhtml#f331"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:28.840" clipEnd="0:29:39.680"/>
+      </par>
+      <par id="par158">
+        <text src="../text/2.xhtml#f332"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:39.680" clipEnd="0:29:46.960"/>
+      </par>
+      <par id="par159">
+        <text src="../text/2.xhtml#f333"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:46.960" clipEnd="0:29:53.560"/>
+      </par>
+      <par id="par160">
+        <text src="../text/2.xhtml#f334"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:29:53.560" clipEnd="0:30:00.280"/>
+      </par>
+      <par id="par161">
+        <text src="../text/2.xhtml#f335"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:30:00.280" clipEnd="0:30:17.440"/>
+      </par>
+      <par id="par162">
+        <text src="../text/2.xhtml#f336"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:30:17.440" clipEnd="0:30:41.840"/>
+      </par>
+      <par id="par163">
+        <text src="../text/2.xhtml#f337"/>
+        <audio src="../audio/civildisobedience_02_thoreau_64kb.mp3" clipBegin="0:30:41.840" clipEnd="0:31:14.840"/>
+      </par>
+    </seq>
+  </body>
+</smil>

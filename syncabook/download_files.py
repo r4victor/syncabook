@@ -15,7 +15,7 @@ MAPPING_FILE = 'map.json'
 BOOKS_DIR = 'books'
 
 
-def download_files(librivox_url, output_dir, skip_text, skip_audio):
+def download_files(librivox_url, output_dir, skip_text=False, skip_audio=False):
     """
     Downloads files needed to create an ebook.
 
@@ -107,7 +107,7 @@ class ProgressBar():
 
     def __call__(self, block_num, block_size, total_size):
         if self.pbar is None:
-            self.pbar = progressbar.ProgressBar(maxval=total_size)
+            self.pbar = progressbar.ProgressBar(max_value=total_size)
             self.pbar.start()
 
         downloaded = block_num * block_size

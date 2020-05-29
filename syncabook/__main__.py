@@ -130,7 +130,11 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'download_files':
-        download_files(args.librivox_url, args.output_dir, args.skip_text, args.skip_audio)
+        download_files(
+            args.librivox_url, args.output_dir,
+            skip_text=args.skip_text,
+            skip_audio=args.skip_audio
+        )
     elif args.command == 'split_text':
         split_text(args.textfile, args.output_dir, args.mode, args.pattern, args.n)
     elif args.command == 'to_xhtml':
