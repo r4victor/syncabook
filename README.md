@@ -2,7 +2,7 @@
 
 ## Overview
 
-<b>syncabook</b> is a set of tools for creating ebooks with synchronized text and audio (a.k.a read along, read aloud, like Amazon's Whispersync). It allows anyone to create such an ebook using open EPUB3 with Media Overlays format.
+<b>syncabook</b> is a set of tools for creating ebooks with synchronized text and audio (a.k.a read along, read aloud, like Amazon's Whispersync). It allows anyone to create such an ebook using open EPUB3 with Media Overlays format. [Here is a video](https://www.youtube.com/watch?v=vEHIzX2yAy4) that demonstrates how reading the ebook produced using <b>syncabook</b> looks like.
 
 The synchronization is done automatically using [afaligner](https://github.com/r4victor/afaligner) library. It is a forced aligner that works by synthesizing text and then aligning synthesized and recorded audio using a variation of [DTW](https://en.wikipedia.org/wiki/Dynamic_time_warping) (Dynamic Time Warping) algorithm. For alignment details, please refer to afaligner repository.
 
