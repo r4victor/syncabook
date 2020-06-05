@@ -12,7 +12,7 @@ def split_text(text_file, output_dir, mode, pattern, n):
             text = f.read()
 
     if mode in ['opening', 'delimeter'] and pattern is None:
-        print(f'\nERROR: --pattern is required in {mode} mode.\n')
+        print(f'\n❌ --pattern is required in {mode} mode.\n')
         return
 
     if mode == 'opening':
@@ -21,17 +21,16 @@ def split_text(text_file, output_dir, mode, pattern, n):
         texts = _split_text_by_delimeter(pattern, text)
     elif mode == 'equal':
         if n is None:
-            print(f'\nERROR: --n is required in {mode} mode.\n')
+            print(f'\n❌ --n is required in {mode} mode.\n')
             return
 
         texts = _split_text_into_n_parts(n, text, output_dir)
     else:
-        print(f'\nERROR: Unknown mode {mode}.\n')
+        print(f'\n❌ Unknown mode {mode}.\n')
 
     if len(texts) > 0:
         _save_texts(texts, output_dir)
-        print(f'\nSplitting into {len(texts)} files is performed.\n')
-
+        print(f'✔ Splitting into {len(texts)} files is performed.')
 
 
 def _split_text_by_opening(pattern, text):
@@ -43,10 +42,7 @@ def _split_text_by_opening(pattern, text):
     openings = re.findall(pattern, text)
 
     if len(openings) == 0:
-        print(
-            f'\nNo text matching pattern "{pattern}". '
-            'Splitting is not permformed.\n'
-        )
+        print(f'\n❗ No text matching pattern "{pattern}". Splitting is not performed.\n')
         return []
 
     texts = re.split(pattern, text)
@@ -64,10 +60,7 @@ def _split_text_by_delimeter(pattern, text):
     texts = re.split(pattern, text)
 
     if len(texts) == 0:
-        print(
-            f'\nNo text matching pattern "{pattern}". '
-            'Splitting is not permformed.\n'
-        )
+        print(f'\n❗ No text matching pattern "{pattern}". Splitting is not performed.\n')
 
     return texts
 

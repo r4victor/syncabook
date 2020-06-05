@@ -28,20 +28,20 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
 
     # create SMIL files using afaligner
     if not os.path.isdir(smil_dir) or len(list(os.listdir(smil_dir))) == 0:
-        print('SMIL files are not found. Synchronizing...')
+        print('❗ SMIL files are not found. Synchronizing...')
         sync(
             book_dir,
             alignment_radius=alignment_radius,
             alignment_skip_penalty=alignment_skip_penalty
         )
     else:
-        print(f'Using existing SMIL files from {smil_dir}.')
+        print(f'✔ Using existing SMIL files from {smil_dir}.')
 
     try:
         with open(metadatafile, 'r') as f:
             metadata = json.load(f)
     except FileNotFoundError:
-        print('File metadata.json is not found. Please provide metadata')
+        print('❗ File metadata.json is not found. Please provide metadata')
         metadata = {}
         metadata['title'] = input('Title: ')
         metadata['author'] = input('Author: ')
@@ -51,14 +51,14 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         metadata['transcriber'] = input('Transcriber: ')
         with open(metadatafile, 'w') as f:
             json.dump(metadata, f, indent=2)
-        print('File metadata.json is created.')
+        print('✔ File metadata.json is created.')
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES_DIR), autoescape=True)
 
     # create ToC file if doesn't exist
     nav_path = os.path.join(no_sync_text_dir, 'nav.xhtml')
     if not os.path.exists(nav_path):
-        print(f'File {nav_path} is not found. Creating...')
+        print(f'❗ File {nav_path} is not found. Creating...')
         content_files = []
         for i, filename in enumerate(sorted(os.listdir(sync_text_dir)), start=1):
             with open(os.path.join(sync_text_dir, filename)) as f:
@@ -73,7 +73,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         with open(nav_path, 'x') as f:
             f.write(nav_content)
 
-        print(f'File {nav_path} has been created. You may want to make some changes.')
+        print(f'✔ File {nav_path} has been created. You may want to make some changes.')
         input('Press any key to proceed:')
 
     # create colophon file if doesn't exist
@@ -90,7 +90,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         with open(colophon_path, 'x') as f:
             f.write(colophon_content)
 
-        print(f'File {colophon_path} has been created. You may want to make some changes.')
+        print(f'✔ File {colophon_path} has been created. You may want to make some changes.')
         input('Press any key to proceed:')
 
     # initialize epub files
@@ -214,7 +214,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
 
     shutil.rmtree(tmp_dir)
 
-    print(f'The ebook has been successfully created and saved as {ebook_path}')
+    print(f'✔ The ebook has been successfully created and saved as {ebook_path}')
 
 
 def _get_media_duration(smil_file_path):

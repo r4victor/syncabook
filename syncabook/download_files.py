@@ -33,14 +33,14 @@ def download_files(librivox_url, output_dir, skip_text=False, skip_audio=False):
         found = _download_synclibrivox_files(librivox_url, output_dir)
         if not found:
             print(
-                f'The synclibrivox repository doesn\'t contain this book.\n'
+                f'❗ The synclibrivox repository doesn\'t contain this book.\n'
                 'Downloading text from gutenberg.org...'
             )
             gutenberg_link = librivox_soup.find(
                 'a', {'href': re.compile(r'http://www.gutenberg.org/.*')}
             )
             if gutenberg_link is None:
-                print('Link to the gutenberg.org is not found. Text won\'t be downloaded.')
+                print('❗ Link to the gutenberg.org is not found. Text won\'t be downloaded.')
             else:
                 gutenberg_url = gutenberg_link['href']
                 _download_gutenberg_text(gutenberg_url, output_dir)
@@ -64,7 +64,7 @@ def _download_synclibrivox_files(librivox_url, output_dir):
     print('The books has been found in the synclibrivox repository. Downloading files...')
     book_path = os.path.join(BOOKS_DIR, book_dir)
     _download_github_directory(book_path, relative_to=book_path, output_dir=output_dir)
-    print(f'All files have been downloaded and saved to {output_dir}')
+    print(f'✔ All files have been downloaded and saved to {output_dir}')
     return True
 
 
@@ -127,7 +127,7 @@ def _download_gutenberg_text(gutenberg_url, output_dir):
     text_path = os.path.join(output_dir, 'text.txt')
 
     urllib.request.urlretrieve(text_absolute_url, text_path, reporthook=ProgressBar())
-    print(f'Text has been downloaded and saved as {text_path}')
+    print(f'✔ Text has been downloaded and saved as {text_path}')
 
 
 def _download_audio_files(audiobook_url, output_dir):
@@ -137,4 +137,4 @@ def _download_audio_files(audiobook_url, output_dir):
 
     with ZipFile(local_filename) as z:
         z.extractall(path=audio_dir)
-    print(f'Audio files have been downloaded to {audio_dir}')
+    print(f'✔ Audio files have been downloaded to {audio_dir}')

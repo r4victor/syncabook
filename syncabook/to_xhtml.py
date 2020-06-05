@@ -28,7 +28,7 @@ def textfiles_to_xhtml_files(input_dir, output_dir, fragment_type, include_headi
         with open(file_path, 'w') as f:
             f.write(xhtml)
 
-    print(f'{len(texts_contents)} plain text files have been converted to XHTML.')
+    print(f'\n✔ {len(texts_contents)} plain text files have been converted to XHTML.\n')
 
 
 def _text_contents_to_xhtmls(texts_contents, fragment_type, include_heading):
@@ -91,7 +91,7 @@ def _get_fragments(paragraphs_content, fragment_type):
     elif fragment_type == 'paragraph':
         return [paragraphs_content]
     else:
-        raise ValueError(f'Unknown fragment_type: {fragment_type}')
+        raise ValueError(f'\n❌ Unknown fragment_type: {fragment_type}\n')
 
 
 def _get_sentences(text):

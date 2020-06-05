@@ -5,7 +5,7 @@ def sync(book_dir, alignment_radius, alignment_skip_penalty):
     try:
         from afaligner import align
     except ImportError:
-        print('Synchronization requires afaligner library. You should install it and try again.')
+        print('❌ Synchronization requires afaligner library. You should install it and try again.')
         exit(1)
 
     sync_text_dir = os.path.join(book_dir, 'sync_text')
@@ -21,4 +21,4 @@ def sync(book_dir, alignment_radius, alignment_skip_penalty):
         skip_penalty=alignment_skip_penalty
     )
     if sync_map is not None:
-        print('Text and audio have been successfully synced.')
+        print('✔ Text and audio have been successfully synced.')
