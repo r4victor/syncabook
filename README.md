@@ -64,7 +64,7 @@ The ebook is assembled from source files in ebook's root directory which include
 
 In order to prepare such a structure <b>syncabook</b> provides a set of tools. Here is a brief outline of a typical usage, see concrete example below.
 
-From the start we have an empty directory named `ebooks/my_ebook/`. Then we need to get an audiobook and save it in `ebooks/my_ebook/audio/`. We also need to get a text. We save it, for example, as `ebooks/my_ebook/text.txt`. Now we need to convert plain text to a list of XHTML files. `split_text` command can help us to split one plain text file into a list of plain text files and `to_xhtml` command converts a list of plain text files to a list of XHTML files. What's left is to synchronize text and audio. We may use `sync` command to do a synchronization and produce a list of SMIL files, or we may just use `create` command that will do a synchronization as well as create `nav.xhtml` file containing a table of contents and `colophon.xhtml` to credit contributors asking us for all the necessary information in the process and saving it as `ebooks/my_ebook/metadata.json`.
+From the start we have an empty directory named `ebooks/my_ebook/`. Then we need to get an audiobook and save it in `ebooks/my_ebook/audio/`. We also need to get a text. We save it, for example, as `ebooks/my_ebook/text.txt`. Now we need to convert plain text to a list of XHTML files. `split_text` command can help us to split one plain text file into a list of plain text files and `to_xhtml` command to convert a list of plain text files to a list of XHTML files. What's left is to synchronize text and audio. We may use `sync` command to do a synchronization and produce a list of SMIL files, or we may just use `create` command that will do a synchronization as well as create `nav.xhtml` file containing a table of contents and `colophon.xhtml` to credit contributors asking us for all the necessary information in the process and saving it as `ebooks/my_ebook/metadata.json`.
 
 If you want to create an ebook for a LibriVox recording, `download_files` command lets you automatically download the audio files from librivox.org and transcribed text from gutenberg.org. Moreover, if someone has produced an ebook for that recording and contributed prepared XHTML and SMIL files to the 
 [synclibrivox](https://github.com/r4victor/synclibrivox) repository, `download_files` command gets them as well and all you are left to do is to run `create` command.
@@ -79,7 +79,7 @@ We will create an ebook for On the Duty of Civil Disobedience by Henry David Tho
 $ syncabook download_files https://librivox.org/civil-disobedience-by-henry-david-thoreau/ civil_disobedience
 ```
 
-2. Audio is recored in two parts, thus we create two files in  `civil_disobedience/plainext/` in which we respecpectively copy content of the first and the second part. This is a little bit of manual labor. If a book is long and recording is made in units like chapters, then `split_text` command can help us to automate this proccess.
+2. Audio is recorded in two parts, thus we create two files in  `civil_disobedience/plainext/` in which we respectively copy the contents of the first and the second part. This is a little bit of manual labor. If a book is long and recording is made in units like chapters, then `split_text` command can help us to automate this process.
 
 3. Convert plain text files into XHTML files:
 
@@ -117,5 +117,5 @@ Please let me know if you know of other apps that support EPUB3 with Media Overl
 
 ## Notes
 
-* While it is not required to have a one-to-one correspondance
-    between text and audio files (i.e. the splitting can be done differently), as the practice shows, it's not always possible to achive a satisfying quality of synchronization and if it is possible, one may need to know the appropriate alignment parameters. Therefore, it is recommended to split text in such a way as to match audio.
+* While it is not required to have a one-to-one correspondence
+    between text and audio files (i.e. the splitting can be done differently), as the practice shows, it's not always possible to achieve a satisfying quality of synchronization and if it is possible, one may need to know the appropriate alignment parameters. Therefore, it is recommended to split text in such a way as to match audio.
