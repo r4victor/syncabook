@@ -51,6 +51,20 @@ Now, <b>syncabook</b> can be run as a Docker container. The only difference with
 $ docker run -v "$PWD":/books/mybook syncabook sync /books/mybook
 ```
 
+## Running tests
+
+1. Install `pytest` and [`epubcheck`](https://pypi.org/project/epubcheck/):
+
+```
+$ pip install pytest epubcheck
+```
+
+2. Run tests:
+
+```
+$ python -m pytest -s tests/
+```
+
 
 ## Ebook production
 
