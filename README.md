@@ -109,6 +109,8 @@ The ebooks produced are in the EPUB3 format and can be opened in any EPUB3 reade
 
 * [Readium](https://chrome.google.com/webstore/detail/readium/fepbnnnkkadjhjahcafoaglimekefifl) (Chrome App) – great read & listen experience. Unfortunately, Google is going to deprecate Chrome Apps.
 
+* [Thorium Reader](https://www.edrlab.org/software/thorium-reader/) (Windows, MacOS and Linux) – Readium's successor, a desktop app in active development.
+
 * [Adobe Digital Editions](https://www.adobe.com/la/solutions/ebook/digital-editions/download.html) (Windows, MacOS, iOS, Android) – fully supports EPUB3 standard. Not the best reading experience, though: text and audio seem out of sync.
 
 * [Menestrello](https://github.com/readbeyond/menestrello) (iOS, Android) – the best app to read & listen that was developed for this specific purpose. Unfortunately, no longer maintained and not even available on AppStore or Google Play. Still, .apk can be installed on Android.
