@@ -11,6 +11,7 @@ setup(
     license='MIT',
     packages=['syncabook'],
     package_data={'syncabook': ['templates/*']},
+    package_dir={'': 'src'},
     entry_points={'console_scripts': ['syncabook=syncabook.__main__:main']},
     install_requires=[
         'beautifulsoup4==4.8.2',
