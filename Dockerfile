@@ -1,19 +1,22 @@
-FROM python:3.8
+FROM python:3.9-slim
 
-WORKDIR /syncabook
-
-COPY syncabook syncabook
-COPY setup.py setup.py
-
-RUN apt-get update && \
-    apt-get install -y espeak \
+RUN apt update -q \
+    && apt install --no-install-recommends -yq espeak \
     libespeak-dev \
     ffmpeg
 
-RUN pip install numpy
-RUN pip install afaligner
+RUN pip install numpy==1.21.2
+RUN pip install pytest==6.2.5
+RUN apt install -yq gcc \
+    && pip install afaligner==0.1.5 \
+    && apt remove --purge -yq gcc
 
-RUN python setup.py sdist && \
-    pip install dist/syncabook*.tar.gz
+WORKDIR /syncabook
+COPY src src
+COPY tests tests
+COPY LICENSE MANIFEST.in pytest.ini README.md setup.py ./
 
-ENTRYPOINT [ "syncabook" ]
+RUN pip install .
+
+WORKDIR /
+ENTRYPOINT ["syncabook"]

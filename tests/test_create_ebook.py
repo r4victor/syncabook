@@ -1,4 +1,6 @@
 import os.path
+import shutil
+import shutil
 
 import pytest
 from epubcheck import EpubCheck
@@ -17,6 +19,14 @@ def test_create_ebook():
             'https://librivox.org/civil-disobedience-by-henry-david-thoreau/',
             book_dir, skip_text=True
         )
-    create.create_ebook(book_dir)
+    smil_dir = os.path.join(book_dir, 'smil')
+
+    try:
+        create.create_ebook(book_dir)
+    finally:
+        # Remove smil dir so that the next time the test performs a sync again
+        if os.path.exists(smil_dir):
+            shutil.rmtree(smil_dir)
+    
     res = EpubCheck(os.path.join(book_dir, 'out/on_the_duty_of_civil_disobedience.epub'))
     assert res.valid is True

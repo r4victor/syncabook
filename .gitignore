@@ -6,6 +6,9 @@
 **/__pycache__/
 *.py[co]
 
+*.egg-info
+
 # project specific
 /tests/resources/*/audio
 /tests/resources/*/out
+/tests/resources/*/smil
