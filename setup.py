@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='syncabook',
-    version='0.0.1',
+    version='0.1.0',
     description='A tool for creating ebooks with synchronized text and audio (EPUB3 with Media Overlays)',
     url='https://github.com/r4victor/syncabook',
     author='Victor Skvortsov',
