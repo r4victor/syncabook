@@ -8,7 +8,7 @@ RUN apt update -q \
 RUN pip install numpy==1.21.2
 RUN pip install pytest==6.2.5
 RUN apt install -yq gcc \
-    && pip install afaligner==0.1.5 \
+    && pip install afaligner==0.1.6 \
     && apt remove --purge -yq gcc
 
 WORKDIR /syncabook
