@@ -19,6 +19,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
     sync_text_dir = os.path.join(book_dir, 'sync_text')
     no_sync_text_dir = os.path.join(book_dir, 'no_sync_text')
     smil_dir = os.path.join(book_dir, 'smil')
+    images_dir = os.path.join(book_dir, 'images')
     metadatafile = os.path.join(book_dir, 'metadata.json')
     output_dir = os.path.join(book_dir, 'out')
 
@@ -100,6 +101,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
     epub_text_dir = os.path.join(epub_dir, 'text')
     epub_smil_dir = os.path.join(epub_dir, 'smil')
     epub_styles_dir = os.path.join(epub_dir, 'styles')
+    epub_images_dir = os.path.join(epub_dir, 'images')
 
     os.makedirs(container_dir)
     os.makedirs(epub_dir)
@@ -108,6 +110,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
     os.makedirs(epub_text_dir)
     os.makedirs(epub_smil_dir)
     os.makedirs(epub_styles_dir)
+    os.makedirs(epub_images_dir)
 
     shutil.copy(
         os.path.join(TEMPLATES_DIR, 'mimetype'),
@@ -125,10 +128,12 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
     # copy resources to epub
     for from_, to in (
         (audio_dir, epub_audio_dir), (sync_text_dir, epub_text_dir),
-        (no_sync_text_dir, epub_text_dir), (smil_dir, epub_smil_dir)
-        ):
-        for filename in os.listdir(from_):
-            shutil.copy(os.path.join(from_, filename), os.path.join(to, filename))
+        (no_sync_text_dir, epub_text_dir), (smil_dir, epub_smil_dir),
+        (images_dir, epub_images_dir)
+    ):
+        if os.path.exists(from_):
+            for filename in os.listdir(from_):
+                shutil.copy(os.path.join(from_, filename), os.path.join(to, filename))
 
     # create package document
     audios = [
@@ -181,6 +186,9 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         for filename, duration in zip(sorted(os.listdir(epub_smil_dir)), media_durations)
     ]
 
+    cover_path = os.path.join(images_dir, 'cover.jpg')
+    include_cover = os.path.exists(cover_path)
+
     opf_template = env.get_template('content.opf')
     opf_content = opf_template.render({
         'uuid': metadata.get('uuid', uuid.uuid4()),
@@ -191,6 +199,7 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         'contributor': metadata.get('contributor', 'me'),
         'date': metadata.get('date', date.today().isoformat()),
         'modified': datetime.now().isoformat(' ', 'seconds'),
+        'include_cover': include_cover,
         'texts': texts,
         'audios': audios,
         'smils': smils,

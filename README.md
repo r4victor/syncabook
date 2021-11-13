@@ -112,6 +112,10 @@ We will create an ebook for On the Duty of Civil Disobedience by Henry David Tho
 
 See the [synclibrivox](https://github.com/r4victor/synclibrivox) repository for this and other ebooks.
 
+## More features
+
+1. To add a cover to the produced ebook, put a JPEG image named `cover.jpg` in the `images/` directory before running `syncabook create`.
+
 ## How to read and listen
 
 The ebooks produced are in the EPUB3 format and can be opened in any EPUB3 reader. Unfortunately, the Read Aloud feature is not well supported. Here's a list of apps, which I know of, that support it:
