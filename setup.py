@@ -16,7 +16,7 @@ setup(
     install_requires=[
         'beautifulsoup4==4.8.2',
         'Jinja2==2.11.3',
-        'lxml==4.6.3',
+        'lxml==4.6.5',
         'progressbar2==3.51.3',
     ]
 )
