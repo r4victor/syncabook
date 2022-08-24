@@ -30,7 +30,7 @@ Now you can run <b>syncabook</b> from the command line:
 syncabook -h
 ```
 
-3. [optional] If you need to do the synchronization, you must also install the [afaligner](https://github.com/r4victor/afaligner) library. It's not necessary if you already have SMIL files that contain synchronization information for a book you. For example, you can download such files for LibriVox recordings from the [synclibrivox](https://github.com/r4victor/synclibrivox) repository.
+3. [optional] If you need to do the synchronization, you must also install the [afaligner](https://github.com/r4victor/afaligner) library. It's not necessary if you already have SMIL files that contain synchronization information for the book. For example, you can download such files for LibriVox recordings from the [synclibrivox](https://github.com/r4victor/synclibrivox) repository.
 
 ### Installation via Docker
 
