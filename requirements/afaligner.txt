@@ -1,0 +1,7 @@
+aeneas==1.7.3.0
+beautifulsoup4==4.11.1
+Jinja2==3.1.2
+lxml==4.9.1
+MarkupSafe==2.1.1
+numpy==1.23.4
+soupsieve==2.3.2.post1

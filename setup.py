@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='syncabook',
-    version='0.1.1',
+    version='0.1.2',
     description='A tool for creating ebooks with synchronized text and audio (EPUB3 with Media Overlays)',
     url='https://github.com/r4victor/syncabook',
     author='Victor Skvortsov',
@@ -14,9 +14,9 @@ setup(
     package_dir={'': 'src'},
     entry_points={'console_scripts': ['syncabook=syncabook.__main__:main']},
     install_requires=[
-        'beautifulsoup4==4.8.2',
-        'Jinja2==2.11.3',
-        'lxml==4.6.3',
-        'progressbar2==3.51.3',
+        'beautifulsoup4>=4.11.1',
+        'Jinja2>=3.1.2',
+        'lxml>=4.9.1',
+        'progressbar2>=4.1.1',
     ]
 )
