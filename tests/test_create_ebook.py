@@ -1,6 +1,5 @@
 import os.path
 import shutil
-import shutil
 
 import pytest
 from epubcheck import EpubCheck
@@ -29,4 +28,4 @@ def test_create_ebook():
             shutil.rmtree(smil_dir)
     
     res = EpubCheck(os.path.join(book_dir, 'out/on_the_duty_of_civil_disobedience.epub'))
-    assert res.valid is True
+    assert res.valid is True, res.messages

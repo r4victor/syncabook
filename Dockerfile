@@ -5,13 +5,18 @@ RUN apt update -q \
     libespeak-dev \
     ffmpeg
 
-RUN pip install numpy==1.21.2
-RUN pip install pytest==6.2.5
+WORKDIR /syncabook
+COPY requirements requirements
+
+RUN pip install numpy==1.23.4
+RUN pip install pytest==7.1.3
 RUN apt install -yq gcc \
-    && pip install afaligner==0.1.8 \
+    && pip install -r requirements/afaligner.txt \
+    && pip install afaligner==0.1.9 \
     && apt remove --purge -yq gcc
 
-WORKDIR /syncabook
+RUN pip install -r requirements/base.txt
+
 COPY src src
 COPY tests tests
 COPY LICENSE MANIFEST.in pytest.ini README.md setup.py ./
