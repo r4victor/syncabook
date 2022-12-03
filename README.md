@@ -134,3 +134,4 @@ Please let me know if you know of other apps that support EPUB3 with Media Overl
 
 * While it is not required to have a one-to-one correspondence
     between text and audio files (i.e. the splitting can be done differently), as the practice shows, it's not always possible to achieve a satisfying quality of synchronization and if it is possible, one may need to know the appropriate alignment parameters. Therefore, it is recommended to split text in such a way as to match audio.
+* **syncabook** identifies text fragments in XHTML files by looking for tags with attributes of the form `id="f[0-9]+"` ([see an example](https://github.com/r4victor/afaligner/blob/master/tests/resources/shakespeare/text_complete/p001.xhtml)). If you use the `to_xhtml` command to produce XHTML files from plaintext, they will contain the proper tags automatically. If you use your own XHTML files, you'll need to modify them to contain the tags with `id` attributes.
