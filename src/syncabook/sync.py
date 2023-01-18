@@ -1,7 +1,7 @@
 import os.path
 
 
-def sync(book_dir, alignment_radius, alignment_skip_penalty):
+def sync(book_dir, alignment_radius, alignment_skip_penalty, language):
     try:
         from afaligner import align
     except ImportError:
@@ -18,7 +18,8 @@ def sync(book_dir, alignment_radius, alignment_skip_penalty):
         sync_map_text_path_prefix='../text/',
         sync_map_audio_path_prefix='../audio/',
         radius=alignment_radius,
-        skip_penalty=alignment_skip_penalty
+        skip_penalty=alignment_skip_penalty,
+        language=language,
     )
     if sync_map is not None:
         print('✔ Text and audio have been successfully synced.')

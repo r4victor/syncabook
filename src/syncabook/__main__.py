@@ -84,6 +84,17 @@ def main():
         )
     )
     parser_sync.add_argument('book_dir')
+    parser_sync.add_argument(
+        '-l', '--language',
+        des='language', type=str, default=str,
+        help=(
+            'Language of the text to hint the TTS. It needs to be a 3-letter code'
+            ' from `aenas.language.Language`:'
+            ' see https://github.com/readbeyond/aeneas/blob/master/aeneas/language.py#L31'
+            ' Defaults to "eng" for English'
+        )
+        
+    )
 
     parser_create = subparsers.add_parser(
         'create',
@@ -147,7 +158,8 @@ def main():
         sync(
             args.book_dir,
             alignment_radius=args.alignment_radius,
-            alignment_skip_penalty=args.alignment_skip_penalty
+            alignment_skip_penalty=args.alignment_skip_penalty,
+            language=args.language
         )
     elif args.command == 'create':
         create_ebook(
