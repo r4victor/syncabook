@@ -84,17 +84,6 @@ def main():
         )
     )
     parser_sync.add_argument('book_dir')
-    parser_sync.add_argument(
-        '-l', '--language',
-        des='language', type=str, default=str,
-        help=(
-            'Language of the text to hint the TTS. It needs to be a 3-letter code'
-            ' from `aenas.language.Language`:'
-            ' see https://github.com/readbeyond/aeneas/blob/master/aeneas/language.py#L31'
-            ' Defaults to "eng" for English'
-        )
-        
-    )
 
     parser_create = subparsers.add_parser(
         'create',
@@ -119,6 +108,16 @@ def main():
 
     # arguments common to both parsers
     for p in (parser_sync, parser_create):
+        p.add_argument(
+            '--l', '--language',
+            dest='language', type=str, default='eng',
+            help=(
+                'Language of the text to hint the TTS. It needs to be a 3-letter code'
+                ' from `aenas.language.Language`:'
+                ' see https://github.com/readbeyond/aeneas/blob/master/aeneas/language.py#L31.'
+                ' Defaults to "eng" for English.'
+            )
+        )
         p.add_argument(
             '--r', '--alignment-radius',
             dest='alignment_radius', type=int,
@@ -159,13 +158,14 @@ def main():
             args.book_dir,
             alignment_radius=args.alignment_radius,
             alignment_skip_penalty=args.alignment_skip_penalty,
-            language=args.language
+            language=args.language,
         )
     elif args.command == 'create':
         create_ebook(
             args.book_dir,
             alignment_radius=args.alignment_radius,
-            alignment_skip_penalty=args.alignment_skip_penalty
+            alignment_skip_penalty=args.alignment_skip_penalty,
+            language=args.language,
         )
 
 

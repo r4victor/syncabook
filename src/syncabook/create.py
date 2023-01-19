@@ -14,7 +14,7 @@ from .sync import sync
 from .utils import drop_extension, format_duration
 
 
-def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
+def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None, language='eng'):
     audio_dir = os.path.join(book_dir, 'audio')
     sync_text_dir = os.path.join(book_dir, 'sync_text')
     no_sync_text_dir = os.path.join(book_dir, 'no_sync_text')
@@ -33,7 +33,8 @@ def create_ebook(book_dir, alignment_radius=None, alignment_skip_penalty=None):
         sync(
             book_dir,
             alignment_radius=alignment_radius,
-            alignment_skip_penalty=alignment_skip_penalty
+            alignment_skip_penalty=alignment_skip_penalty,
+            language=language,
         )
     else:
         print(f'✔ Using existing SMIL files from {smil_dir}.')
