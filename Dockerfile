@@ -12,7 +12,7 @@ RUN pip install numpy==1.23.4
 RUN pip install pytest==7.1.3
 RUN apt install -yq gcc \
     && pip install -r requirements/afaligner.txt \
-    && pip install afaligner==0.1.9 \
+    && pip install afaligner==0.2.0 \
     && apt remove --purge -yq gcc
 
 RUN pip install -r requirements/base.txt
