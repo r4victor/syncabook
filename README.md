@@ -92,7 +92,7 @@ We will create an ebook for On the Duty of Civil Disobedience by Henry David Tho
    syncabook download_files https://librivox.org/civil-disobedience-by-henry-david-thoreau/ civil_disobedience
    ```
 
-2. The audio is recorded in two parts, thus we create two files in  `civil_disobedience/plainext/` in which we respectively copy the contents of the first and second parts. This is a little bit of manual labor. If a book is long and recording is made in units like chapters, the `split_text` command can help you automate this process.
+2. The audio is recorded in two parts, thus we create two files in  `civil_disobedience/plaintext/` in which we respectively copy the contents of the first and second parts. This is a little bit of manual labor. If a book is long and recording is made in units like chapters, the `split_text` command can help you automate this process.
 
 3. Convert the plain text files into the XHTML files:
    ```
