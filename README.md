@@ -130,6 +130,8 @@ The ebooks produced are in the EPUB3 format and can be opened in any EPUB3 reade
 
 Please let me know if you know of other apps that support EPUB3 with Media Overlays.
 
+There are other test reports on [epubtest.org](https://epubtest.org/results/topic/media-overlays).
+
 ## Notes
 
 * While it is not required to have a one-to-one correspondence
